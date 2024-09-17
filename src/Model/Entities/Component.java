@@ -8,11 +8,11 @@ public abstract class Component {
     protected Project project ;
 
     // Constructor
-    public Component(String name,String componentType, double vatRate ,Project project) {
+    public Component(String name,String componentType, double vatRate ) {
         this.name = name;
         this.componentType = componentType;
         this.vatRate = vatRate;
-        this.project = project ;
+
     }
 
     public Component(){

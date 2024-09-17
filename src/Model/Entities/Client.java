@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-
+    private int id;
     private String name;
     private String address;
     private String phone;
@@ -13,17 +13,26 @@ public class Client {
 
     // Constructor
     public Client(String name, String address, String phone, boolean isProfessional) {
+
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.isProfessional = isProfessional;
         this.projects = new ArrayList<>();
     }
-    public Client(){
+
+    public Client() {
 
     }
 
-    // Getters and Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,8 +61,8 @@ public class Client {
         return isProfessional;
     }
 
-    public void setProfessional(boolean isProfessional) {
-        this.isProfessional = isProfessional;
+    public void setProfessional(boolean professional) {
+        isProfessional = professional;
     }
 
     public List<Project> getProjects() {
@@ -64,4 +73,8 @@ public class Client {
         this.projects = projects;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", isProfessional=" + isProfessional + ", projects=" + projects + '}';
+    }
 }
