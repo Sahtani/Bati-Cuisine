@@ -23,3 +23,26 @@ CREATE TABLE Component (
     typeComponent VARCHAR(50) NOT NULL,
     tvaRate DOUBLE PRECISION NOT NULL
 );
+
+CREATE TABLE Material (
+	unitCost DOUBLE PRECISION NOT NULL,
+    quantity DOUBLE PRECISION NOT NULL,
+    transportCost DOUBLE PRECISION NOT NULL,
+    qualityCoefficient DOUBLE PRECISION NOT NULL
+) INHERITS (Component);
+
+CREATE TABLE Labor (
+    hourlyRate DOUBLE PRECISION NOT NULL,
+    hoursWorked DOUBLE PRECISION NOT NULL,
+    workerProductivity DOUBLE PRECISION NOT NULL
+) INHERITS (Component);
+
+CREATE TABLE Estimates (
+    id SERIAL PRIMARY KEY,
+    project_id INT,
+    estimatedAmount DOUBLE PRECISION NOT NULL,
+    issueDate DATE NOT NULL,
+    validityDate DATE NOT NULL,
+    accepted BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (project_id) REFERENCES Projects(id) ON DELETE CASCADE
+);

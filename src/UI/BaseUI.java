@@ -1,28 +1,20 @@
+package UI;
 
-
-import Config.Db;
-import Repository.Implementations.ClientRepository;
-import Service.Implementations.ClientService;
-import UI.ClientUI;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Main {
+public class BaseUI {
 
-public static void main(String[] args) throws SQLException {
-    displayMainMenu();
-}
-    public static void displayMainMenu() throws SQLException {
-        Connection connection = Db.getInstance().getConnection();;
-        ClientRepository clientRepository = new ClientRepository(connection);
-        ClientService clientService = new ClientService(clientRepository);
+    private ClientUI clientUI;
+   // private ProjectUI projectUI;
+    private Scanner scanner = new Scanner(System.in);
 
-        ClientUI clientUI = new ClientUI(clientService);
+    public BaseUI(ClientUI clientUI) {
+        this.clientUI = clientUI;
+      //  this.projectUI = projectUI;
+    }
 
-
-        Scanner scanner = new Scanner(System.in);
+    public void displayMainMenu() throws SQLException {
         while (true) {
             System.out.println("\n--- Main Menu ---");
             System.out.println("1. Manage Clients");
@@ -36,7 +28,7 @@ public static void main(String[] args) throws SQLException {
                     clientUI.displayClientMenu();
                     break;
                 case 2:
-                    // projectUI.displayProjectMenu();
+                   // projectUI.displayProjectMenu();
                     break;
                 case 3:
                     System.out.println("Goodbye!");

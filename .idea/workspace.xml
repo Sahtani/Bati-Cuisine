@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Repository/Implementations/BaseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/Interfaces/Repository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/BaseUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/ClientUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Util/DataValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Config/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config/data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Component.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Interfaces/IClientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +26,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -44,7 +48,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SOUMIA/Downloads/postgresql-42.7.4.jar",
     "onboarding.tips.debug.path": "C:/Users/SOUMIA/IdeaProjects/Bati-Cuisine/src/Main.java",
