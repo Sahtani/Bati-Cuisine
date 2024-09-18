@@ -1,0 +1,17 @@
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n\r\nimport Config.Db;\r\nimport Repository.Implementations.ClientRepository;\r\nimport Service.Implementations.ClientService;\r\nimport UI.ClientUI;\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.SQLException;\r\nimport java.util.Scanner;\r\n\r\npublic class Main {\r\n\r\npublic static void main(String[] args) throws SQLException {\r\n    displayMainMenu();\r\n}\r\n    public static void displayMainMenu() throws SQLException {\r\n        Connection connection = Db.getInstance().getConnection();;\r\n        ClientRepository clientRepository = new ClientRepository(connection);\r\n        ClientService clientService = new ClientService(clientRepository);\r\n\r\n        ClientUI clientUI = new ClientUI(clientService);\r\n\r\n\r\n        Scanner scanner = new Scanner(System.in);\r\n        while (true) {\r\n            System.out.println(\"\\n--- Main Menu ---\");\r\n            System.out.println(\"1. Manage Clients\");\r\n            System.out.println(\"2. Manage Projects\");\r\n            System.out.println(\"3. Exit\");\r\n            System.out.print(\"Choose an option: \");\r\n            int choice = scanner.nextInt();\r\n            scanner.nextLine();\r\n            switch (choice) {\r\n                case 1:\r\n                    clientUI.displayClientMenu();\r\n                    break;\r\n                case 2:\r\n                    // projectUI.displayProjectMenu();\r\n                    break;\r\n                case 3:\r\n                    System.out.println(\"Goodbye!\");\r\n                    return;\r\n                default:\r\n                    System.out.println(\"Invalid option, please try again.\");\r\n            }\r\n        }}\r\n}\r\n
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision c22b229a09b531d4fc18d71cfe3b21946deb16c5)
++++ b/src/Main.java	(date 1726666283921)
+@@ -15,7 +15,7 @@
+     displayMainMenu();
+ }
+     public static void displayMainMenu() throws SQLException {
+-        Connection connection = Db.getInstance().getConnection();;
++        Connection connection = Db.getInstance().getConnection();
+         ClientRepository clientRepository = new ClientRepository(connection);
+         ClientService clientService = new ClientService(clientRepository);
+ 
