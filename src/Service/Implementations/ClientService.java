@@ -1,7 +1,5 @@
 package Service.Implementations;
 
-import Model.Entities.Client;
-import Repository.Implementations.ClientRepository;
 import Service.Interfaces.IClientService;
 import Util.DataValidator;
 

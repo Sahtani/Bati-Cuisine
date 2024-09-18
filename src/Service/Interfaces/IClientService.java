@@ -1,11 +1,8 @@
 package Service.Interfaces;
 
-import Model.Entities.Client;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface IClientService {
 
