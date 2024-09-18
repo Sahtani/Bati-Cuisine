@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="" />
+    <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Model/Entities/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Entities/Project.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,20 +39,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "BC-16-manage-projects",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/SOUMIA/Downloads/postgresql-42.7.4.jar",
-    "onboarding.tips.debug.path": "C:/Users/SOUMIA/IdeaProjects/Bati-Cuisine/src/Main.java",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;BC-16-manage-projects&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/SOUMIA/Downloads/postgresql-42.7.4.jar&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/SOUMIA/IdeaProjects/Bati-Cuisine/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SOUMIA\IdeaProjects\Bati-Cuisine\src\Model\Enums" />
+      <recent name="C:\Users\SOUMIA\IdeaProjects\Bati-Cuisine\src" />
+      <recent name="C:\Users\SOUMIA\IdeaProjects\Bati-Cuisine" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
