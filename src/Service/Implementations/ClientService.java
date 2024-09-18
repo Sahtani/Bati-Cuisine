@@ -1,5 +1,7 @@
 package Service.Implementations;
 
+import Model.Entities.Client;
+import Repository.Implementations.ClientRepository;
 import Service.Interfaces.IClientService;
 import Util.DataValidator;
 
@@ -25,7 +27,7 @@ public class ClientService implements IClientService {
 
 
                 clientRepository.create(client);
-                System.out.println("Client added successfully!");
+
 
             } else{
                 System.out.println("Client data is invalid. Please check the provided information.");
@@ -45,8 +47,9 @@ public class ClientService implements IClientService {
             }
         }
 
-        public void deleteClient ( int clientId) throws SQLException {
-            //     Optional<Client> existingClient = clientRepository.findById(clientId);
+
+
+    public void deleteClient (int clientId) throws SQLException {
             Optional<Client> existingClient = getClientById(clientId);
 
 

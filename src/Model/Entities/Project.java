@@ -2,16 +2,14 @@ package Model.Entities;
 
 import Model.Enums.ProjectStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Project {
 
+    private int id;
     private String projectName;
     private double profitMargin;
     private double totalCost;
     private ProjectStatus status;
-    private Client client ;
+    private Client client;
 //    private List<Component> components;
 //    private Estimate estimate ;
 
@@ -22,11 +20,20 @@ public class Project {
         this.profitMargin = profitMargin;
         this.totalCost = totalCost;
         this.status = status;
-        this.client = client ;
+        this.client = client;
 //        this.components = new ArrayList<>();
     }
-    public Project(){
 
+    public Project() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getProjectName() {
@@ -61,13 +68,24 @@ public class Project {
         this.status = status;
     }
 
-    public Client getClient(){
-        return client ;
-    }
-    public void setClient(Client client){
-        this.client = client ;
+    public Client getClient() {
+        return client;
     }
 
+    public void setClient(int client) {
+        this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectName='" + projectName + '\'' +
+                ", profitMargin=" + profitMargin +
+                ", totalCost=" + totalCost +
+                ", status=" + status +
+                ", client=" + client +
+                '}';
+    }
 //    public List<Component> getComponents() {
 //        return components;
 //    }
