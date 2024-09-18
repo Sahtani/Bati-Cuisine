@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="" />
+    <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Repository/Interfaces/IComponentRepository.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +38,7 @@
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "BC-18-manage-clients",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SOUMIA/Downloads/postgresql-42.7.4.jar",
     "onboarding.tips.debug.path": "C:/Users/SOUMIA/IdeaProjects/Bati-Cuisine/src/Main.java",
