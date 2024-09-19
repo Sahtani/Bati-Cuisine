@@ -2,8 +2,6 @@ package Model.Entities;
 
 import Model.Enums.ProjectStatus;
 
-import java.util.Optional;
-
 public class Project {
 
     private int id;
@@ -11,13 +9,13 @@ public class Project {
     private double profitMargin;
     private double totalCost;
     private ProjectStatus status;
-    private Optional<Client> client;
+    private Client client;
 //    private List<Component> components;
 //    private Estimate estimate ;
 
 
     // Constructor
-    public Project(String projectName, double profitMargin, double totalCost, ProjectStatus status, Optional<Client> client) {
+    public Project(String projectName, double profitMargin, double totalCost, ProjectStatus status, Client client) {
         this.projectName = projectName;
         this.profitMargin = profitMargin;
         this.totalCost = totalCost;
@@ -70,11 +68,11 @@ public class Project {
         this.status = status;
     }
 
-    public Optional<Client> getClient() {
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(Optional<Client> client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 

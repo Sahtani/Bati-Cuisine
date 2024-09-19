@@ -37,7 +37,7 @@ public class ClientService implements IClientService {
 
         @Override
         public void updateClient ( int clientId, Client client) throws SQLException {
-            Optional<Client> existingClient = getClientById(clientId);
+            Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
 
             if (existingClient.isPresent()) {
                 client.setId(clientId);
@@ -50,7 +50,7 @@ public class ClientService implements IClientService {
 
 
     public void deleteClient (int clientId) throws SQLException {
-            Optional<Client> existingClient = getClientById(clientId);
+            Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
 
 
             if (existingClient.isPresent()) {
@@ -66,8 +66,8 @@ public class ClientService implements IClientService {
         }
 
         @Override
-        public Optional<Client> getClientById ( int clientId) throws SQLException {
-            Optional<Client> client = clientRepository.findById(clientId);
-            return Optional.ofNullable(client.orElse(null));
+        public Client getClientById ( int clientId) throws SQLException {
+            Client client = clientRepository.findById(clientId);
+            return client ;
         }
     }

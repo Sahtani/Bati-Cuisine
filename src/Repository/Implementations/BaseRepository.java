@@ -29,7 +29,7 @@ public abstract class BaseRepository<T> implements Repository<T> {
     }
 
     @Override
-    public Optional<T> findById(int id) throws SQLException {
+    public T findById(int id) throws SQLException {
         T entity = null;
         String query = "SELECT * FROM " + getTableName() + " WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -40,7 +40,7 @@ public abstract class BaseRepository<T> implements Repository<T> {
                 }
             }
         }
-        return Optional.ofNullable(entity);
+        return entity;
     }
 
     @Override

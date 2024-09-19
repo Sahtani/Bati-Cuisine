@@ -1,20 +1,18 @@
 package Service.Implementations;
 
-import Model.Entities.Client;
 import Model.Entities.Project;
-import Repository.Implementations.ClientRepository;
 import Repository.Implementations.ProjectRepository;
 import Service.Interfaces.IProjectService;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 public class ProjectService implements IProjectService {
 
     private ProjectRepository projectRepository;
 
-    public ProjectService(ClientRepository clientRepository) {
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository ;
     }
 
     @Override
@@ -44,10 +42,10 @@ public class ProjectService implements IProjectService {
 
     @Override
     public void deleteProject(int projectId) throws SQLException {
-        Optional<Project> existingClient = getProjectById(projectId);
+       Project existingClient = getProjectById(projectId);
 
 
-        if (existingClient.isPresent()) {
+        if (existingClient !=null) {
             projectRepository.delete(projectId);
         } else {
             System.out.println("Client with ID " + projectId + " not found.");
@@ -61,8 +59,8 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
-    public Optional<Project> getProjectById(int projectId) throws SQLException {
-        Optional<Project> client = projectRepository.findById(projectId);
-        return Optional.ofNullable(client.orElse(null));
+    public Project getProjectById(int projectId) throws SQLException {
+        Project project = projectRepository.findById(projectId);
+        return project;
     }
 }

@@ -35,7 +35,6 @@ public class ClientRepository extends BaseRepository<Client> {
         statement.setString(2, client.getAddress());
         statement.setString(3, client.getPhone());
         statement.setBoolean(4, client.isProfessional());
-        statement.setInt(5, client.getId());
 
     }
 

@@ -24,7 +24,7 @@ public class ProjectUI {
         this.clientService = clientService;
     }
 
-    public void displayClientMenu() throws SQLException {
+    public void displayProjectMenu() throws SQLException {
         while (true) {
             viewProjects();
             System.out.println("\n--- Manage Projects ---");
@@ -72,19 +72,18 @@ public class ProjectUI {
         System.out.print("Enter project ID to update: ");
         int projectId = Integer.parseInt(scanner.nextLine());
 
-        Optional<Project> projectOptional = projectService.getProjectById(projectId);
-
-        if (projectOptional.isPresent()) {
-            Optional<Client> client = projectOptional.get().getClient();
-            System.out.println("Updating client: " + client.get().getName());
-
-            Project updatedClient = getProjectInput();
-            projectService.updateProject(projectId, updatedClient);
+        Project existingProject = projectService.getProjectById(projectId);
+        if (existingProject != null) {
+            Client client = existingProject.getClient();
+            System.out.println("Updating project for client: " + client.getName());
+            Project updatedProject = getProjectInput();
+            projectService.updateProject(projectId, updatedProject);
             System.out.println("Project updated successfully.");
         } else {
             System.out.println("Project not found.");
         }
     }
+
 
 
     private void deleteProject() throws SQLException {
@@ -112,7 +111,7 @@ public class ProjectUI {
         System.out.print("Enter total cost: ");
         double totalCost = scanner.nextDouble();
 
-        System.out.print("Enter project status (e.g., IN_PROGRESS, COMPLETED, CANCELLED): ");
+        System.out.print("Enter project status (ONGOING, COMPLETED, CANCELLED): ");
         String statusString = scanner.next().toUpperCase();
         ProjectStatus projectStatus = ProjectStatus.valueOf(statusString);
 
@@ -122,7 +121,7 @@ public class ProjectUI {
         int clientId = scanner.nextInt();
         scanner.nextLine();
 
-        Optional<Client> client = clientService.getClientById(clientId);
+        Client client = clientService.getClientById(clientId);
 
         return new Project(projectName, profitMargin, totalCost, projectStatus, client);
     }
