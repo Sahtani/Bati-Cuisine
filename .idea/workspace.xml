@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Repository/Implementations/LaborRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Repository/Implementations/MaterialRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/Implementations/ComponentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/Interfaces/IComponentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/LaborService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/LaborService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Util/DataValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/DataValidator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

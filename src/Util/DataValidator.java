@@ -1,5 +1,6 @@
 package Util;
 
+import Model.Entities.Labor;
 import Model.Entities.Material;
 
 public class DataValidator {
@@ -25,7 +26,7 @@ public class DataValidator {
         return value;
     }
 
-    public static void validate(Material material) throws IllegalArgumentException {
+    public static void validateMaterial(Material material) throws IllegalArgumentException {
         if (material.getName() == null || material.getName().isEmpty()) {
             throw new IllegalArgumentException("Material name cannot be null or empty.");
         }
@@ -46,6 +47,24 @@ public class DataValidator {
         }
         if (material.getQualityCoefficient() < 0 || material.getQualityCoefficient() > 1) {
             throw new IllegalArgumentException("Quality coefficient must be between 0 and 1.");
+        }
+    }
+
+    public static void validateLabor(Labor labor) throws IllegalArgumentException {
+        if (labor.getName() == null || labor.getName().isEmpty()) {
+            throw new IllegalArgumentException("Labor name cannot be null or empty.");
+        }
+        if (labor.getHourlyRate() < 0) {
+            throw new IllegalArgumentException("Hourly rate cannot be negative.");
+        }
+        if (labor.getHoursWorked() < 0) {
+            throw new IllegalArgumentException("Hours worked cannot be negative.");
+        }
+        if (labor.getWorkerProductivity() < 0 || labor.getWorkerProductivity() > 1) {
+            throw new IllegalArgumentException("Worker productivity must be between 0 and 1.");
+        }
+        if (labor.getVatRate() < 0) {
+            throw new IllegalArgumentException("VAT rate cannot be negative.");
         }
     }
 }

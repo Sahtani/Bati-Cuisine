@@ -6,7 +6,7 @@ import Service.Interfaces.IComponentService;
 
 import java.sql.SQLException;
 
-import static Util.DataValidator.validate;
+import static Util.DataValidator.validateMaterial;
 
 public class MaterialService implements IComponentService<Material> {
     private final MaterialRepository materialRepository;
@@ -19,7 +19,7 @@ public class MaterialService implements IComponentService<Material> {
     public Material add(Material material) throws SQLException {
 
         try {
-            validate(material);
+            validateMaterial(material);
             return materialRepository.create(material);
         } catch (IllegalArgumentException e) {
             System.err.println("Validation failed: " + e.getMessage());
