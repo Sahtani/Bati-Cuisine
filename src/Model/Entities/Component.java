@@ -1,14 +1,15 @@
 package Model.Entities;
 
 public abstract class Component {
-
+    protected int id;
     protected String name;
     protected String componentType;
     protected double vatRate;
     protected Project project ;
 
     // Constructor
-    public Component(String name,String componentType, double vatRate ) {
+    public Component(int id,    String name,String componentType, double vatRate ) {
+        this.id = id;
         this.name = name;
         this.componentType = componentType;
         this.vatRate = vatRate;
@@ -19,6 +20,15 @@ public abstract class Component {
 
     }
     // Getters and Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

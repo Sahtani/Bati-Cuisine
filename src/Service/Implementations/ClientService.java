@@ -23,9 +23,6 @@ public class ClientService implements IClientService {
                 DataValidator.isValidAddress(client.getAddress()) &&
                 DataValidator.isValidPhoneNumber(client.getPhone())&&
                 DataValidator.isValidBoolean(client.isProfessional())){
-
-
-
                 clientRepository.create(client);
 
 
