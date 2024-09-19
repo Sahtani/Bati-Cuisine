@@ -14,6 +14,9 @@ public class Labor extends Component {
         this.workerProductivity = workerProductivity;
     }
 
+    public Labor(){
+
+    }
     // Getters and Setters
     public double getHourlyRate() {
         return hourlyRate;

@@ -16,6 +16,11 @@ public class Material extends Component{
         this.qualityCoefficient = qualityCoefficient;
     }
 
+    // default constructor
+    public Material(){
+
+    }
+
     // Getters and Setters
     public double getUnitCost() {
         return unitCost;

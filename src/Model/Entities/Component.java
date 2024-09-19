@@ -8,8 +8,8 @@ public abstract class Component {
     protected Project project ;
 
     // Constructor
-    public Component(int id,    String name,String componentType, double vatRate ) {
-        this.id = id;
+    public Component(String name,String componentType, double vatRate ) {
+
         this.name = name;
         this.componentType = componentType;
         this.vatRate = vatRate;
@@ -19,6 +19,8 @@ public abstract class Component {
     public Component(){
 
     }
+
+
     // Getters and Setters
 
     public int getId() {
