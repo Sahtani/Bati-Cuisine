@@ -2,15 +2,17 @@ package UI;
 
 import Model.Entities.Material;
 import Service.Implementations.MaterialService;
+import Service.Interfaces.IComponentService;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MaterialUI {
-    private final MaterialService materialService;
-    private final Scanner scanner = new Scanner(System.in);
 
-    public MaterialUI(MaterialService materialService) {
+    private final Scanner scanner = new Scanner(System.in);
+    private final IComponentService<Material> materialService;
+
+    public MaterialUI(IComponentService<Material> materialService) {
         this.materialService = materialService;
     }
 
@@ -36,37 +38,40 @@ public class MaterialUI {
         }
     }
 
-    private void createMaterial() throws SQLException {
-        System.out.print("Enter material name: ");
-        String name = scanner.nextLine();
+    public void createMaterial() throws SQLException {
+        while (true) {
+            System.out.println("---------- Adding the materials ------------");
+            System.out.print("Enter material name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter the unit cost (€/m²): ");
+            double unitCost = scanner.nextDouble();
+            System.out.print("Enter the quantity (in m²): ");
+            double quantity = scanner.nextDouble();
+            System.out.print("Enter VAT rate: ");
+            double vatRate = scanner.nextDouble();
+            System.out.print("Enter the transportation cost (€): ");
+            double transportCost = scanner.nextDouble();
+            System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): ");
+            double qualityCoefficient = scanner.nextDouble();
+            scanner.nextLine();
 
-        System.out.print("Enter unit cost: ");
-        double unitCost = scanner.nextDouble();
+            Material material = new Material(name, unitCost, quantity, transportCost, qualityCoefficient, vatRate);
+            Material addedMaterial = materialService.add(material);
 
-        System.out.print("Enter quantity: ");
-        double quantity = scanner.nextDouble();
+            if (addedMaterial != null) {
+                System.out.println("Material created with ID: " + material.getId());
+            } else {
+                System.out.println("Failed to create material.");
+            }
 
-//        System.out.print("Enter component type: ");
-//        scanner.nextLine();
-//        String componentType = scanner.nextLine();
+            System.out.print("Do you want to add another material? (y/n): ");
+            String response = scanner.nextLine();
 
-
-        System.out.print("Enter transport cost: ");
-        double transportCost = scanner.nextDouble();
-
-        System.out.print("Enter quality coefficient: ");
-        double qualityCoefficient = scanner.nextDouble();
-
-        System.out.print("Enter VAT rate: ");
-        double vatRate = scanner.nextDouble();
-
-        Material material = new Material(name, unitCost, quantity, transportCost, qualityCoefficient, vatRate);
-        Material addedMaterial = materialService.add(material);
-
-        if (addedMaterial != null) {
-            System.out.println("Material created with ID: " + material.getId());
-        } else {
-            System.out.println("Failed to create material.");
+            if (!response.equalsIgnoreCase("y")) {
+                break;
+            }
         }
     }
+
 }
+

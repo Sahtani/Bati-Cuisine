@@ -12,6 +12,7 @@ public class MaterialService implements IComponentService<Material> {
     private final MaterialRepository materialRepository;
 
     public MaterialService(MaterialRepository materialRepository) {
+
         this.materialRepository = materialRepository;
     }
 

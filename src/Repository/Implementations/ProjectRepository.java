@@ -3,6 +3,7 @@ package Repository.Implementations;
 import Model.Entities.Client;
 import Model.Entities.Project;
 import Service.Implementations.ClientService;
+import Service.Interfaces.IClientService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,8 +12,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class ProjectRepository extends BaseRepository<Project> {
-     private ClientService clientService  ;
-    public ProjectRepository(Connection connection, ClientService clientService ) {
+     private IClientService clientService  ;
+    public ProjectRepository(Connection connection, IClientService clientService ) {
         super(connection);
         this.clientService = clientService ;
     }
@@ -46,7 +47,7 @@ public class ProjectRepository extends BaseRepository<Project> {
         statement.setString(2, project.getProjectName());
         statement.setDouble(3, project.getProfitMargin());
         statement.setDouble(4, project.getTotalCost());
-        statement.setString(5, project.getStatus().toString());
+        statement.setString(5, String.valueOf(project.getStatus().ONGOING));
     }
 
 

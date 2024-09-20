@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/UI/LaborUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/MaterialUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Labor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Labor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/LaborRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/LaborRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/MaterialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/MaterialRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/ClientUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ClientUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/LaborUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/LaborUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/MaterialUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/MaterialUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/ProjectUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ProjectUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="BC-18-manage-clients" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,6 +55,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
+    "Application.ProjectManagementUI.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "BC-17-Component-Management",
