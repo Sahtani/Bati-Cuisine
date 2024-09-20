@@ -1,4 +1,5 @@
 
+
 package UI;
 
 import Model.Entities.Client;
@@ -72,9 +73,9 @@ public class ProjectUI {
         System.out.print("Enter project ID to update: ");
         int projectId = Integer.parseInt(scanner.nextLine());
 
-        Project existingProject = projectService.getProjectById(projectId);
-        if (existingProject != null) {
-            Client client = existingProject.getClient();
+       Optional<Project> existingProject = projectService.getProjectById(projectId);
+        if (existingProject.isPresent()) {
+            Client client = existingProject.get().getClient();
             System.out.println("Updating project for client: " + client.getName());
             Project updatedProject = getProjectInput();
             projectService.updateProject(projectId, updatedProject);
@@ -128,5 +129,3 @@ public class ProjectUI {
 
 
 }
-
-

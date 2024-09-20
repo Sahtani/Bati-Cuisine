@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ClientRepository extends BaseRepository<Client> {
 
@@ -46,5 +47,27 @@ public class ClientRepository extends BaseRepository<Client> {
     @Override
     protected String getUpdateQuery() {
         return "UPDATE clients SET name = ?, address = ?, phone = ?, isProfessional = ? WHERE id = ?";
+    }
+
+    public Optional<Client> findClientByName(String name) {
+        String query = "SELECT * FROM clients WHERE name = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Client client = new Client(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("address"),
+                        resultSet.getString("phone"),
+                        resultSet.getBoolean("isprofessional")
+
+                );
+                return Optional.of(client);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

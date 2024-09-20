@@ -16,7 +16,9 @@ public interface IClientService {
 
     List<Client> getAllClients() throws SQLException;
 
-    Client getClientById(int clientId) throws SQLException;;
+    Client getClientById(int clientId) throws SQLException;
+
+    Optional<Client> findClientByName(String name);
 
 
 }

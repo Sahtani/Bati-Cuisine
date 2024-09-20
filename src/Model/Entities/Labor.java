@@ -7,16 +7,17 @@ public class Labor extends Component {
     private double workerProductivity;
 
     // Constructor
-    public Labor(String name, double hourlyRate, double hoursWorked, double workerProductivity, double vatRate) {
-        super(name, "Labor", vatRate);
+    public Labor(String name, double vatRate, Project project, double hourlyRate, double hoursWorked, double workerProductivity) {
+        super(name, "Labor", vatRate, project);
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
         this.workerProductivity = workerProductivity;
     }
 
-    public Labor(){
+    public Labor() {
 
     }
+
     // Getters and Setters
     public double getHourlyRate() {
         return hourlyRate;

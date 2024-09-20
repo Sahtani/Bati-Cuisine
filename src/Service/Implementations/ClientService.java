@@ -67,4 +67,9 @@ public class ClientService implements IClientService {
             Client client = clientRepository.findById(clientId);
             return client ;
         }
+
+    @Override
+    public Optional<Client> findClientByName(String name) {
+        return clientRepository.findClientByName(name);
     }
+}

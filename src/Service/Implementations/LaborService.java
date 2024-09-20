@@ -17,10 +17,10 @@ public class LaborService implements IComponentService<Labor> {
     }
 
     @Override
-    public Labor add(Labor labor) throws SQLException {
+    public Labor add(Labor labor,int projectId) throws SQLException {
         try {
             validateLabor(labor);
-            return laborRepository.create(labor);
+            return laborRepository.create(labor,projectId);
         } catch (IllegalArgumentException e) {
             System.err.println("Validation failed: " + e.getMessage());
             return null;

@@ -18,7 +18,7 @@ public class Main {
         displayMainMenu();
     }
     public static void displayMainMenu() throws SQLException {
-        Connection connection = Db.getInstance().getConnection();;
+        Connection connection = Db.getInstance().getConnection();
         ClientRepository clientRepository = new ClientRepository(connection);
         ClientService clientService = new ClientService(clientRepository);
         ProjectRepository projectRepository = new ProjectRepository(connection,clientService);

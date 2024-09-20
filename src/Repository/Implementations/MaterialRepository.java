@@ -16,19 +16,19 @@ public class MaterialRepository implements ComponentRepository<Material> {
     }
 
     @Override
-    public Material create(Material material) {
-        String sqlInsert = "INSERT INTO material (name, unit_cost, quantity, component_type, vat_rate, transport_cost, quality_coefficient) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String sqlSelect = "SELECT id FROM material WHERE name = ? AND unit_cost = ?";
+    public Material create(Material material,int projectId) {
+        String sqlInsert = "INSERT INTO material (name, unitcost, quantity,tvarate, transportcost, qualitycoefficient,typecomponent,project_id) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+        String sqlSelect = "SELECT id FROM material WHERE name = ? AND unitcost = ?";
 
         try (PreparedStatement insertStmt = connection.prepareStatement(sqlInsert)) {
             insertStmt.setString(1, material.getName());
             insertStmt.setDouble(2, material.getUnitCost());
             insertStmt.setDouble(3, material.getQuantity());
-            insertStmt.setString(4, material.getComponentType());
-            insertStmt.setDouble(5, material.getVatRate());
-            insertStmt.setDouble(6, material.getTransportCost());
-            insertStmt.setDouble(7, material.getQualityCoefficient());
-
+            insertStmt.setDouble(4, material.getVatRate());
+            insertStmt.setDouble(5, material.getTransportCost());
+            insertStmt.setDouble(6, material.getQualityCoefficient());
+            insertStmt.setString(7, material.getComponentType());
+            insertStmt.setInt(8,projectId);
             int affectedRows = insertStmt.executeUpdate();
             if (affectedRows > 0) {
                 try (PreparedStatement selectStmt = connection.prepareStatement(sqlSelect)) {
