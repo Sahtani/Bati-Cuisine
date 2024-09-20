@@ -22,6 +22,7 @@ public class ProjectRepository extends BaseRepository<Project> {
     public Project mapResultSetToEntity(ResultSet resultSet) throws SQLException {
 
         Project project = new Project();
+        project.setId(resultSet.getInt("id"));
         int clientId = resultSet.getInt("client_id");
         Client client = clientService.getClientById(clientId);
 
@@ -43,6 +44,7 @@ public class ProjectRepository extends BaseRepository<Project> {
 
     @Override
     public void setParameters(PreparedStatement statement, Project project) throws SQLException {
+
         statement.setInt(1, project.getClient().getId());
         statement.setString(2, project.getProjectName());
         statement.setDouble(3, project.getProfitMargin());

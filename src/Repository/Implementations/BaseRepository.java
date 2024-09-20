@@ -1,5 +1,6 @@
 package Repository.Implementations;
 
+import Model.Interfaces.Identifiable;
 import Repository.Interfaces.Repository;
 
 import java.sql.*;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseRepository<T> implements Repository<T> {
+public abstract class BaseRepository<T extends Identifiable> implements Repository<T> {
 
     protected Connection connection;
 
@@ -22,11 +23,24 @@ public abstract class BaseRepository<T> implements Repository<T> {
     @Override
     public void create(T entity) throws SQLException {
         String query = getInsertQuery();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setParameters(statement, entity);
-            statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        entity.setId(generatedKeys.getInt(1));
+                    } else {
+                        throw new SQLException("Creating entity failed, no ID obtained.");
+                    }
+                }
+            } else {
+                throw new SQLException("Creating entity failed, no rows affected.");
+            }
         }
     }
+
 
     @Override
     public T findById(int id) throws SQLException {

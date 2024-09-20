@@ -6,17 +6,18 @@ import Service.Interfaces.IProjectService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class ProjectService implements IProjectService {
 
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository ;
     }
 
     @Override
-    public void addProject(Project project) throws SQLException {
+    public Project addProject(Project project) throws SQLException {
         if (project == null) {
             throw new IllegalArgumentException("Project cannot be null");
         }
@@ -32,6 +33,7 @@ public class ProjectService implements IProjectService {
         }
 
         projectRepository.create(project);
+        return project;
     }
 
     @Override
@@ -41,26 +43,35 @@ public class ProjectService implements IProjectService {
 
 
     @Override
-    public void deleteProject(int projectId) throws SQLException {
-       Project existingClient = getProjectById(projectId);
+    public Optional<Project> deleteProject(int projectId) throws SQLException {
+        Optional<Project> existingClient = getProjectById(projectId);
 
-
-        if (existingClient !=null) {
+        if (existingClient.isPresent()) {
             projectRepository.delete(projectId);
         } else {
             System.out.println("Client with ID " + projectId + " not found.");
         }
 
+        return existingClient;
     }
 
     @Override
     public List<Project> getAllProject() throws SQLException {
-        return projectRepository.findAll();
+        return  projectRepository.findAll();
     }
 
     @Override
-    public Project getProjectById(int projectId) throws SQLException {
-        Project project = projectRepository.findById(projectId);
-        return project;
-    }
+//    public Project getProjectById(int projectId) throws SQLException {
+//        Project project = projectRepository.findById(projectId);
+//        System.out.println(project.getId());
+//        return project;
+//    }
+public Optional<Project> getProjectById(int projectId) throws SQLException {
+    List<Project> projectList = getAllProject();
+    return projectList.stream()
+            .filter(project -> project.getId() == projectId)
+            .findFirst();
+}
+
+
 }

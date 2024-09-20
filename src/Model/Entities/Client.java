@@ -1,9 +1,11 @@
 package Model.Entities;
 
+import Model.Interfaces.Identifiable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
+public class Client implements Identifiable {
     private int id;
     private String name;
     private String address;
