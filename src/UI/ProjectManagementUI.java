@@ -30,7 +30,7 @@ public class ProjectManagementUI {
     private final IComponentService<Labor> laborService;
     private final IComponentService<Material> materialService;
 
- //   private final ProjectUI projectUI;
+    //   private final ProjectUI projectUI;
     private final ClientUI clientUI;
     private final MaterialUI materialUI;
     private final LaborUI laborUI;
@@ -41,19 +41,18 @@ public class ProjectManagementUI {
         this.materialService = materialService;
         this.laborService = laborService;
 
-       // this.projectUI = new ProjectUI(projectService, clientService);
         this.clientUI = new ClientUI(clientService);
-        this.materialUI = new MaterialUI(materialService);
-        this.laborUI = new LaborUI(laborService);
+        this.materialUI = new MaterialUI(materialService, (IProjectService) projectService);
+        this.laborUI = new LaborUI(laborService, (IProjectService) projectService);
     }
 
     public static void main(String[] args) throws SQLException {
         IClientService clientService = new ClientService(new ClientRepository(connection));
-        IProjectService projectService = new ProjectService(new ProjectRepository(connection,clientService));
+        IProjectService projectService = new ProjectService(new ProjectRepository(connection, clientService));
         IComponentService<Material> materialService = new MaterialService(new MaterialRepository(connection));
-        IComponentService<Labor> laborService =new LaborService(new LaborRepository(connection));
+        IComponentService<Labor> laborService = new LaborService(new LaborRepository(connection));
 
-        ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService,laborService ,materialService );
+        ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService, laborService, materialService);
         ui.mainMenu();
     }
 
@@ -120,11 +119,25 @@ public class ProjectManagementUI {
             Project project = new Project();
             project.setProjectName(projectName);
             project.setClient(clientOptional.get());
-            projectService.addProject(project);
-            System.out.println("Project added successfully.");
-            materialUI.createMaterial();
-            scanner.nextLine();
-            laborUI.createLabor();
+            Project addedProject = projectService.addProject(project);
+          int          projectId = addedProject.getId();
+
+            String materialResponse;
+
+            do {
+                materialUI.createMaterial(projectId);
+                System.out.print("Do you want to add another material? (y/n): ");
+                materialResponse = scanner.nextLine();
+            } while (materialResponse.equalsIgnoreCase("y"));
+
+            System.out.println("-------------------- Labor Addition --------------");
+            String laborResponse;
+            do {
+                laborUI.createLabor(projectId);
+                System.out.print("Do you want to add another labor? (y/n): ");
+                laborResponse = scanner.nextLine();
+            } while (laborResponse.equalsIgnoreCase("y"));
+
         } else {
             System.out.println("Client not found. Returning to the main menu.");
         }

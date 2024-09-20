@@ -16,8 +16,8 @@ public class MaterialRepository implements ComponentRepository<Material> {
     }
 
     @Override
-    public Material create(Material material) {
-        String sqlInsert = "INSERT INTO material (name, unitcost, quantity,tvarate, transportcost, qualitycoefficient,typecomponent) VALUES (?, ?, ?, ?, ?, ?,?)";
+    public Material create(Material material,int projectId) {
+        String sqlInsert = "INSERT INTO material (name, unitcost, quantity,tvarate, transportcost, qualitycoefficient,typecomponent,project_id) VALUES (?, ?, ?, ?, ?, ?,?,?)";
         String sqlSelect = "SELECT id FROM material WHERE name = ? AND unitcost = ?";
 
         try (PreparedStatement insertStmt = connection.prepareStatement(sqlInsert)) {
@@ -28,6 +28,7 @@ public class MaterialRepository implements ComponentRepository<Material> {
             insertStmt.setDouble(5, material.getTransportCost());
             insertStmt.setDouble(6, material.getQualityCoefficient());
             insertStmt.setString(7, material.getComponentType());
+            insertStmt.setInt(8,projectId);
             int affectedRows = insertStmt.executeUpdate();
             if (affectedRows > 0) {
                 try (PreparedStatement selectStmt = connection.prepareStatement(sqlSelect)) {

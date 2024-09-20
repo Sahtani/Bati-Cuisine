@@ -8,8 +8,8 @@ public class Material extends Component{
     private double qualityCoefficient;
 
     // Constructor
-    public Material(String name, double unitCost, double quantity, double transportCost, double qualityCoefficient, double vatRate) {
-        super(name, "Material", vatRate);
+    public Material(String name, double vatRate, Project project, double unitCost, double quantity, double transportCost, double qualityCoefficient) {
+        super(name, "Material", vatRate, project);
         this.unitCost = unitCost;
         this.quantity = quantity;
         this.transportCost = transportCost;
@@ -41,6 +41,8 @@ public class Material extends Component{
     public double getTransportCost() {
         return transportCost;
     }
+
+
 
     public void setTransportCost(double transportCost) {
         this.transportCost = transportCost;

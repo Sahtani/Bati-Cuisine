@@ -17,11 +17,11 @@ public class MaterialService implements IComponentService<Material> {
     }
 
     @Override
-    public Material add(Material material) throws SQLException {
+    public Material add(Material material,int projectId) throws SQLException {
 
         try {
             validateMaterial(material);
-            return materialRepository.create(material);
+            return materialRepository.create(material,projectId);
         } catch (IllegalArgumentException e) {
             System.err.println("Validation failed: " + e.getMessage());
             return null;

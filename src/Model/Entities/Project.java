@@ -1,8 +1,9 @@
 package Model.Entities;
 
 import Model.Enums.ProjectStatus;
+import Model.Interfaces.Identifiable;
 
-public class Project {
+public class Project implements Identifiable {
 
     private int id;
     private String projectName;
@@ -15,7 +16,7 @@ public class Project {
 
 
     // Constructor
-    public Project(String projectName, double profitMargin, double totalCost, ProjectStatus status, Client client) {
+    public Project( String projectName, double profitMargin, double totalCost, ProjectStatus status, Client client) {
         this.projectName = projectName;
         this.profitMargin = profitMargin;
         this.totalCost = totalCost;
@@ -28,12 +29,14 @@ public class Project {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
+    @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public String getProjectName() {

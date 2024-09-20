@@ -1,5 +1,5 @@
 package Repository.Interfaces;
 @FunctionalInterface
 public interface ComponentRepository<T> {
-    T create(T entity);
+    T create(T entity,int projectId);
 }
