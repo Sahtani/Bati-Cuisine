@@ -21,9 +21,19 @@ public class Client {
         this.projects = new ArrayList<>();
     }
 
+    public Client(int id, String name, String address, String phone, boolean isProfessional) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.isProfessional = isProfessional;
+//        this.projects = new ArrayList<>();
+    }
+
     public Client() {
 
     }
+
 
     public int getId() {
         return id;

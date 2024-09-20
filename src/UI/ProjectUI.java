@@ -1,4 +1,5 @@
 
+
 package UI;
 
 import Model.Entities.Client;
@@ -128,5 +129,3 @@ public class ProjectUI {
 
 
 }
-
-

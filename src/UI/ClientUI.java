@@ -2,6 +2,7 @@ package UI;
 
 import Model.Entities.Client;
 import Service.Implementations.ClientService;
+import Service.Interfaces.IClientService;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -11,10 +12,10 @@ import static java.lang.System.exit;
 
 public class ClientUI {
 
-    private ClientService clientService;
+    private IClientService clientService;
     private Scanner scanner = new Scanner(System.in);
 
-    public ClientUI(ClientService clientService) {
+    public ClientUI(IClientService clientService) {
         this.clientService = clientService;
     }
 
@@ -54,7 +55,7 @@ public class ClientUI {
         }
     }
 
-    private void addClient() throws SQLException {
+    public void addClient() throws SQLException {
         System.out.println("\n=== Add Client ===");
         Client client = getClientInput();
         clientService.addClient(client);
@@ -92,7 +93,7 @@ public class ClientUI {
         }
     }
 
-    private Client getClientInput() {
+    public Client getClientInput() {
         System.out.print("Enter client name: ");
         String name = scanner.nextLine();
         System.out.print("Enter client address: ");
