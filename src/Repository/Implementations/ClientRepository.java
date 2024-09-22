@@ -1,11 +1,13 @@
 package Repository.Implementations;
 
 import Model.Entities.Client;
+import Model.Entities.Project;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class ClientRepository extends BaseRepository<Client> {
@@ -62,7 +64,10 @@ public class ClientRepository extends BaseRepository<Client> {
                         resultSet.getString("phone"),
                         resultSet.getBoolean("isprofessional")
 
+
                 );
+                List<Project> projects = client.getProjects();
+                client.setProjects(projects);
                 return Optional.of(client);
             }
         } catch (SQLException e) {

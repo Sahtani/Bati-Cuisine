@@ -5,6 +5,8 @@ import Model.Entities.Material;
 import Repository.Interfaces.ComponentRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LaborRepository implements ComponentRepository<Labor> {
     private final Connection connection;
@@ -35,4 +37,35 @@ public class LaborRepository implements ComponentRepository<Labor> {
             }
         return labor;
     }
+    public List<Labor> getAllLabor() throws SQLException {
+        List<Labor> labors = new ArrayList<>();
+        String query = "SELECT * FROM labor";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Labor labor = new Labor();
+                labor.setId(resultSet.getInt("id"));
+                labor.setName(resultSet.getString("name"));
+                labor.setHourlyRate(resultSet.getDouble("hourlyrate"));
+                labor.setHoursWorked(resultSet.getDouble("hoursworked"));
+                labor.setWorkerProductivity(resultSet.getDouble("workerproductivity"));
+                labors.add(labor);
+            }
+        }
+
+        return labors;
+    }
+
+    public void updateLaborVAT(int laborId, double newVatRate) throws SQLException {
+        String query = "UPDATE labor SET vat_rate = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDouble(1, newVatRate);
+            statement.setInt(2, laborId);
+            statement.executeUpdate();
+        }
+    }
+
+
 }

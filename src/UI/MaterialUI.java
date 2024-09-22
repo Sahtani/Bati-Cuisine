@@ -2,9 +2,6 @@ package UI;
 
 import Model.Entities.Material;
 import Model.Entities.Project;
-import Service.Implementations.ClientService;
-import Service.Implementations.MaterialService;
-import Service.Implementations.ProjectService;
 import Service.Interfaces.IComponentService;
 import Service.Interfaces.IProjectService;
 
@@ -47,7 +44,7 @@ public class MaterialUI {
         }
     }
 
-    public void createMaterial(int projectId) throws SQLException {
+    public Material createMaterial(int projectId) throws SQLException {
 
         System.out.println("---------- Material Addition ------------");
         System.out.print("Enter material name: ");
@@ -74,6 +71,7 @@ public class MaterialUI {
             System.out.println("Failed to create material.");
         }
 
+        return material;
     }
 }
 

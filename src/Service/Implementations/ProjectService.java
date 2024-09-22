@@ -66,12 +66,25 @@ public class ProjectService implements IProjectService {
 //        System.out.println(project.getId());
 //        return project;
 //    }
+
 public Optional<Project> getProjectById(int projectId) throws SQLException {
     List<Project> projectList = getAllProject();
     return projectList.stream()
             .filter(project -> project.getId() == projectId)
             .findFirst();
 }
+
+    @Override
+    public void updateTotalCost(int projectId, double newTotalCost) throws SQLException {
+        projectRepository.updateTotalCost(projectId, newTotalCost);
+
+    }
+
+    @Override
+    public void updateProfitMargin(int projectId, double newProfitMargin) throws SQLException {
+        projectRepository.updateProfitMargin(projectId,newProfitMargin);
+
+    }
 
 
 }

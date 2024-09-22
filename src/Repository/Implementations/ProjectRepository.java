@@ -65,5 +65,39 @@ public class ProjectRepository extends BaseRepository<Project> {
         return "UPDATE projects SET client_id = ?, projectname = ?, profitmargin = ?, totalcost = ?, projectstatus = ? WHERE id = ?";
     }
 
+    public void updateTotalCost(int projectId, double newTotalCost) throws SQLException {
+        String updateTotalCostQuery = "UPDATE projects SET totalcost = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(updateTotalCostQuery)) {
+            statement.setDouble(1, newTotalCost);
+            statement.setInt(2, projectId);
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Total cost updated successfully for project ID: " + projectId);
+            } else {
+                System.out.println("Project not found with ID: " + projectId);
+            }
+        }
+    }
+    public void updateProfitMargin(int projectId, double newProfitMargin) throws SQLException {
+        String updateProfitMarginQuery = "UPDATE projects SET profitmargin = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(updateProfitMarginQuery)) {
+            statement.setDouble(1, newProfitMargin);
+            statement.setInt(2, projectId);
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Profit margin updated successfully for project ID: " + projectId);
+            } else {
+                System.out.println("Project not found with ID: " + projectId);
+            }
+        }
+    }
+
+
+
+
 
 }
