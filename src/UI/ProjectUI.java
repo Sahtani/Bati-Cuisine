@@ -103,28 +103,28 @@ public class ProjectUI {
     }
 
     private Project getProjectInput() throws SQLException {
+        Project project = new Project();
+
         System.out.print("Enter project name: ");
-        String projectName = scanner.nextLine();
+        project.setProjectName(scanner.nextLine());
 
         System.out.print("Enter profit margin: ");
-        double profitMargin = scanner.nextDouble();
+        project.setProfitMargin(scanner.nextDouble());
 
         System.out.print("Enter total cost: ");
-        double totalCost = scanner.nextDouble();
+        project.setTotalCost(scanner.nextDouble());
 
         System.out.print("Enter project status (ONGOING, COMPLETED, CANCELLED): ");
         String statusString = scanner.next().toUpperCase();
-        ProjectStatus projectStatus = ProjectStatus.valueOf(statusString);
+        project.setStatus(ProjectStatus.valueOf(statusString));
 
-        scanner.nextLine();
+        scanner.nextLine(); // Consume the newline character
 
         System.out.print("Enter client ID: ");
         int clientId = scanner.nextInt();
-        scanner.nextLine();
+        project.setClient(clientService.getClientById(clientId));
 
-        Client client = clientService.getClientById(clientId);
-
-        return new Project(projectName, profitMargin, totalCost, projectStatus, client);
+        return project;
     }
 
 

@@ -29,7 +29,7 @@ public class Client implements Identifiable {
         this.address = address;
         this.phone = phone;
         this.isProfessional = isProfessional;
-//        this.projects = new ArrayList<>();
+
     }
 
     public Client() {
@@ -84,7 +84,6 @@ public class Client implements Identifiable {
     public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
-
     @Override
     public String toString() {
         return "Client{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", isProfessional=" + isProfessional + ", projects=" + projects + '}';

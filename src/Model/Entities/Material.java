@@ -7,6 +7,7 @@ public class Material extends Component{
     private double transportCost;
     private double qualityCoefficient;
 
+
     // Constructor
     public Material(String name, double vatRate, Project project, double unitCost, double quantity, double transportCost, double qualityCoefficient) {
         super(name, "Material", vatRate, project);
@@ -55,5 +56,20 @@ public class Material extends Component{
 
     public void setQualityCoefficient(double qualityCoefficient) {
         this.qualityCoefficient = qualityCoefficient;
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "unitCost=" + unitCost +
+                ", quantity=" + quantity +
+                ", transportCost=" + transportCost +
+                ", qualityCoefficient=" + qualityCoefficient +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", componentType='" + componentType + '\'' +
+                ", vatRate=" + vatRate +
+                ", project=" + project +
+                '}';
     }
 }
