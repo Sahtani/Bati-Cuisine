@@ -15,6 +15,8 @@ import Service.Interfaces.IProjectService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
@@ -29,6 +31,9 @@ public class ProjectManagementUI {
 
     private final LaborService laborService;
     private final MaterialService materialService;
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 
 
     private final ClientUI clientUI;
@@ -292,6 +297,12 @@ public class ProjectManagementUI {
             projectService.updateTotalCost(addedProject, finalTotalCost);
             System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
 
+            System.out.println("--- Saving the estimate ---");
+
+            saveEstimate();
+
+            System.out.println("--- End of the project ---\n");
+
         } catch (Exception e) {
             System.out.println("An error occurred while calculating the costs: " + e.getMessage());
         }
@@ -323,6 +334,35 @@ public class ProjectManagementUI {
     private double applyMargin(double baseCost, double marginPercentage) {
         return baseCost * (marginPercentage / 100);
     }
+
+    public void saveEstimate() {
+        try {
+            System.out.print("Enter the quote issuance date (format: dd/MM/yyyy): ");
+            String issuanceDateStr = scanner.nextLine();
+            LocalDate issuanceDate = LocalDate.parse(issuanceDateStr, formatter);
+
+            System.out.print("Enter the quote validity date (format: dd/MM/yyyy): ");
+            String validityDateStr = scanner.nextLine();
+            LocalDate validityDate = LocalDate.parse(validityDateStr, formatter);
+
+            System.out.print("Do you want to save the quote? (y/n): ");
+            String confirmation = scanner.nextLine();
+
+            if (confirmation.equalsIgnoreCase("y")) {
+                saveQuoteToDatabase(issuanceDate, validityDate);
+                System.out.println("Estimate saved successfully!");
+            } else {
+                System.out.println("Saving canceled.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error saving the quote: " + e.getMessage());
+        }
+    }
+
+    private void saveQuoteToDatabase(LocalDate issuanceDate, LocalDate validityDate) {
+        // Logic to save the quote
+    }
+
 
 
 }
