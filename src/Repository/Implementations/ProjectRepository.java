@@ -80,21 +80,36 @@ public class ProjectRepository extends BaseRepository<Project> {
             }
         }
     }
-    public void updateProfitMargin(int projectId, double newProfitMargin) throws SQLException {
-        String updateProfitMarginQuery = "UPDATE projects SET profitmargin = ? WHERE id = ?";
+    public boolean updateProfitMargin(Project project, double newProfitMargin) throws SQLException {
 
+        project.setProfitMargin(newProfitMargin);
+        String updateProfitMarginQuery = "UPDATE projects SET profitmargin = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(updateProfitMarginQuery)) {
             statement.setDouble(1, newProfitMargin);
-            statement.setInt(2, projectId);
-            int rowsAffected = statement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Profit margin updated successfully for project ID: " + projectId);
-            } else {
-                System.out.println("Project not found with ID: " + projectId);
-            }
+            statement.setInt(2, project.getId());
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
+
+    public boolean updateTotalCost(Project project, double newTotalCost) throws SQLException {
+        project.setTotalCost(newTotalCost);
+        String updateTotalCostQuery = "UPDATE projects SET totalcost = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateTotalCostQuery)) {
+            statement.setDouble(1, newTotalCost);
+            statement.setInt(2, project.getId());
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
 
 

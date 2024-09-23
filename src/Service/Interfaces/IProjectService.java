@@ -18,8 +18,8 @@ public interface IProjectService {
 
     Optional<Project>  getProjectById(int projectId) throws SQLException;
 
-    void updateTotalCost(int projectId, double newTotalCost) throws SQLException;
+    void updateTotalCost(Project project, double newTotalCost) throws SQLException;
 
-    void updateProfitMargin(int projectId, double newProfitMargin) throws SQLException;
+    void updateProfitMargin(Project project, double newProfitMargin) throws SQLException;
 
 }

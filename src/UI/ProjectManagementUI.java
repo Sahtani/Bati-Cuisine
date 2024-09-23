@@ -179,7 +179,7 @@ public class ProjectManagementUI {
         System.out.println("Displaying existing projects...");
     }
 
-    private void applyMargprofitProject(Project addedProject) throws SQLException {
+    private Project applyMargprofitProject(Project addedProject) throws SQLException {
 
 
 //        System.out.println("--- Total Cost Calculation ---");
@@ -202,7 +202,8 @@ public class ProjectManagementUI {
         if (profitMarginResponse.equalsIgnoreCase("y")) {
             System.out.print("Enter profit margin percentage (%): ");
             profitMarginPercentage = scanner.nextDouble();
-            projectService.updateProfitMargin(addedProject.getId(), profitMarginPercentage);
+            System.out.println(profitMarginPercentage);
+            projectService.updateProfitMargin(addedProject, profitMarginPercentage);
             scanner.nextLine();
         }
 
@@ -215,6 +216,7 @@ public class ProjectManagementUI {
         System.out.println("Site Address:" + addedProject.getClient().getAddress());
 
 
+        return addedProject;
     }
 
     private void displayProjectCost(Project addedProject) throws SQLException {
@@ -291,18 +293,20 @@ public class ProjectManagementUI {
          //   System.out.printf("**Total labor cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalLaborCostTV);
             //display totalCost for project :
 
-            double totalCost = totalMaterialCost + totalLaborCost;
+            double totalCost = totalMaterialCostWithVAT + totalLaborCostWithVAT;
             System.out.printf("3.Total project cost before margin: %.2f €\n", totalCost);
 
             //// Profit margin display
-            double morgeBeneficium = applyMargin(totalCost, addedProject.getProfitMargin());
 
-            System.out.printf("3.Profit margin (%.0f%%) : %.2f €\n", addedProject.getProfitMargin(), morgeBeneficium);
+            double profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
+
+
+            System.out.printf("3.Profit margin (%.0f%%) : %.2f €\n", addedProject.getProfitMargin(), profitmargin);
 
             // Total final cost display
 
-            double finalTotalCost = applyMargin(totalCost, morgeBeneficium);
-            projectService.updateTotalCost(addedProject.getId(),finalTotalCost);
+            double finalTotalCost = applyMargin(totalCost, profitmargin);
+            projectService.updateTotalCost(addedProject,finalTotalCost);
             System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
 
 

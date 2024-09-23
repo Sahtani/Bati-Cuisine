@@ -75,14 +75,14 @@ public Optional<Project> getProjectById(int projectId) throws SQLException {
 }
 
     @Override
-    public void updateTotalCost(int projectId, double newTotalCost) throws SQLException {
-        projectRepository.updateTotalCost(projectId, newTotalCost);
+    public void updateTotalCost(Project project, double newTotalCost) throws SQLException {
+        projectRepository.updateTotalCost(project, newTotalCost);
 
     }
 
     @Override
-    public void updateProfitMargin(int projectId, double newProfitMargin) throws SQLException {
-        projectRepository.updateProfitMargin(projectId,newProfitMargin);
+    public void updateProfitMargin(Project project, double newProfitMargin) throws SQLException {
+        projectRepository.updateProfitMargin(project,newProfitMargin);
 
     }
 
