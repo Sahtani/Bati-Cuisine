@@ -179,22 +179,22 @@ public class ProjectManagementUI {
         System.out.println("Displaying existing projects...");
     }
 
-    private void applyTvaProject(Project addedProject) throws SQLException {
-        // addedProject = createProject();
-
-        System.out.println("--- Total Cost Calculation ---");
-
-        System.out.print("Do you want to apply VAT to the project? (y/n): ");
-        String vatResponse = scanner.nextLine();
-        double vatPercentage = 0;
-        if (vatResponse.equalsIgnoreCase("y")) {
-            System.out.print("Enter VAT percentage (%): ");
-
-            vatPercentage = scanner.nextDouble();
+    private void applyMargprofitProject(Project addedProject) throws SQLException {
 
 
-            scanner.nextLine();
-        }
+//        System.out.println("--- Total Cost Calculation ---");
+//
+//        System.out.print("Do you want to apply VAT to the project? (y/n): ");
+//        String vatResponse = scanner.nextLine();
+//        double vatPercentage = 0;
+//        if (vatResponse.equalsIgnoreCase("y")) {
+//            System.out.print("Enter VAT percentage (%): ");
+//
+//            vatPercentage = scanner.nextDouble();
+//
+//
+//            scanner.nextLine();
+//        }
 
         System.out.print("Do you want to apply a profit margin to the project? (y/n): ");
         String profitMarginResponse = scanner.nextLine();
@@ -218,7 +218,7 @@ public class ProjectManagementUI {
     }
 
     private void displayProjectCost(Project addedProject) throws SQLException {
-        applyTvaProject(addedProject);
+        applyMargprofitProject(addedProject);
         try {
             System.out.println("---Cost Details---");
 //            System.out.println(addedProject);
@@ -226,7 +226,7 @@ public class ProjectManagementUI {
 
             //  double totalMaterialCost = materialService.calculateTotalCostMT();
             //   double totalLaborCost = laborService.calculateTotalCostLB();
-// Calculate total material cost
+            // Calculate total material cost
             double totalMaterialCost = addedProject.getComponents().stream()
                     .filter(component -> component instanceof Material)
                     .map(component -> (Material) component)
@@ -235,26 +235,33 @@ public class ProjectManagementUI {
                     .sum();
             // get material details :
             System.out.println("1. Materials :");
-            addedProject.getComponents().stream()
+            double totalMaterialCostWithVAT = addedProject.getComponents().stream()
                     .filter(component -> component instanceof Material)
                     .map(component -> (Material) component)
-                    .forEach(material -> {
+                    .mapToDouble(material -> {
                         double materialCost = (material.getQuantity() * material.getUnitCost() * material.getQualityCoefficient())
                                 + material.getTransportCost();
-                        System.out.printf("- %s : %.2f € (quantity: %.2f, unit cost: %.2f €/m², quality: %.1f, transport: %.2f €)\n",
-                                material.getName(), materialCost, material.getQuantity(), material.getUnitCost(),
-                                material.getQualityCoefficient(), material.getTransportCost());
-                    });
-            // filter components based on their VAT (TVA) :
-            double vatPercentage = addedProject.getComponents().stream()
-                    .filter(component -> component.getVatRate() > 0)
-                    .map(Component::getVatRate)
-                    .findFirst()
-                    .orElse(0.0);
+                        double vatRate = material.getVatRate();
+                        double materialCostWithVAT = materialCost + (materialCost * vatRate / 100);
+                        System.out.printf("- %s : %.2f € (quantity: %.2f, unit cost: %.2f €/m², quality: %.1f, transport: %.2f €, VAT: %.0f%%)\n",
+                                material.getName(), materialCostWithVAT, material.getQuantity(), material.getUnitCost(),
+                                material.getQualityCoefficient(), material.getTransportCost(), vatRate);
+                        return materialCostWithVAT;
+                    }).sum();
+
+            System.out.printf("**Total material cost with VAT: %.2f €**\n", totalMaterialCostWithVAT);
+
+
+//            // filter components based on their VAT (TVA) :
+//            double vatPercentage = addedProject.getComponents().stream()
+//                    .filter(component -> component.getVatRate() > 0)
+//                    .map(Component::getVatRate)
+//                    .findFirst()
+//                    .orElse(0.0);
 
             System.out.printf("**Total material cost before VAT: %.2f €**\n", totalMaterialCost);
-            double totalMaterialCostTV = applyVAT(totalMaterialCost, vatPercentage);
-            System.out.printf("**Total material cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalMaterialCostTV);
+           // double totalMaterialCostTV = applyVAT(totalMaterialCost, vatPercentage);
+         //   System.out.printf("**Total material cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalMaterialCostTV);
 
             // Calculate total labor cost
 
@@ -265,18 +272,23 @@ public class ProjectManagementUI {
                     .sum();
             // get labos details :
             System.out.println("2. Labor:");
-            addedProject.getComponents().stream()
+            double totalLaborCostWithVAT = addedProject.getComponents().stream()
                     .filter(component -> component instanceof Labor)
                     .map(component -> (Labor) component)
-                    .forEach(labor -> {
+                    .mapToDouble(labor -> {
                         double laborCost = labor.getHourlyRate() * labor.getHoursWorked() * labor.getWorkerProductivity();
-                        System.out.printf("- %s : %.2f € (hourly rate: %.2f €/h, hours worked: %.2f h, productivity: %.1f)\n",
-                                labor.getName(), laborCost, labor.getHourlyRate(), labor.getHoursWorked(), labor.getWorkerProductivity());
-                    });
+                        double vatRate = labor.getVatRate();
+                        double laborCostWithVAT = laborCost + (laborCost * vatRate / 100);
+                        System.out.printf("- %s : %.2f € (hourly rate: %.2f €/h, hours worked: %.2f h, productivity: %.1f, VAT: %.0f%%)\n",
+                                labor.getName(), laborCostWithVAT, labor.getHourlyRate(), labor.getHoursWorked(),
+                                labor.getWorkerProductivity(), vatRate);
+                        return laborCostWithVAT;
+                    }).sum();
 
-            System.out.printf("**Total labor cost before VAT: %.2f €**\n", totalLaborCost);
-            double totalLaborCostTV = applyVAT(totalLaborCost, vatPercentage);
-            System.out.printf("**Total labor cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalLaborCostTV);
+            System.out.printf("**Total labor cost with VAT: %.2f €**\n", totalLaborCostWithVAT);
+
+            //     double totalLaborCostTV = applyVAT(totalLaborCost, vatPercentage);
+         //   System.out.printf("**Total labor cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalLaborCostTV);
             //display totalCost for project :
 
             double totalCost = totalMaterialCost + totalLaborCost;
@@ -290,9 +302,9 @@ public class ProjectManagementUI {
             // Total final cost display
 
             double finalTotalCost = applyMargin(totalCost, morgeBeneficium);
-
-            System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
             projectService.updateTotalCost(addedProject.getId(),finalTotalCost);
+            System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
+
 
 
         } catch (Exception e) {

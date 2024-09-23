@@ -6,23 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Labor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Labor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Material.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/LaborRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/LaborRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/MaterialRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/MaterialRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Interfaces/ComponentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Interfaces/ComponentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/LaborService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/LaborService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/MaterialService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Interfaces/IProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Interfaces/IProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/LaborUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/LaborUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/MaterialUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/MaterialUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ProjectUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ProjectUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
