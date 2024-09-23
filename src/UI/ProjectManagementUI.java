@@ -148,6 +148,7 @@ public class ProjectManagementUI {
         } else {
             System.out.println("Client not found. Returning to the main menu.");
         }
+        applyMargprofitProject(addedProject);
         String response;
         assert addedProject != null;
         System.out.print("Do you want to calculate the cost of the project " + addedProject.getProjectName() + "? (y/n): ");
@@ -211,7 +212,7 @@ public class ProjectManagementUI {
     }
 
     private void displayProjectCost(Project addedProject) throws SQLException {
-        applyMargprofitProject(addedProject);
+
         try {
             System.out.println("---Cost Details---");
 

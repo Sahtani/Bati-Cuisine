@@ -112,6 +112,7 @@ public class ProjectRepository extends BaseRepository<Project> {
     }
 
     public boolean updateTotalCost(Project project, double newTotalCost) throws SQLException {
+
         project.setTotalCost(newTotalCost);
         String updateTotalCostQuery = "UPDATE projects SET totalcost = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(updateTotalCostQuery)) {
