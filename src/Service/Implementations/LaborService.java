@@ -1,9 +1,7 @@
 package Service.Implementations;
 
 import Model.Entities.Labor;
-import Model.Entities.Material;
 import Repository.Implementations.LaborRepository;
-import Repository.Implementations.MaterialRepository;
 import Service.Interfaces.IComponentService;
 
 import java.sql.SQLException;

@@ -47,20 +47,28 @@ public class MaterialUI {
     public Material createMaterial(int projectId) throws SQLException {
 
         System.out.println("---------- Material Addition ------------");
+
         System.out.print("Enter material name: ");
         String name = scanner.nextLine();
+
         System.out.print("Enter the unit cost (€/m²): ");
         double unitCost = scanner.nextDouble();
+
         System.out.print("Enter the quantity (in m²): ");
         double quantity = scanner.nextDouble();
+
         System.out.print("Enter VAT rate: ");
         double vatRate = scanner.nextDouble();
+
         System.out.print("Enter the transportation cost (€): ");
         double transportCost = scanner.nextDouble();
-        System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): ");
+
+        System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.1 = high quality): ");
         double qualityCoefficient = scanner.nextDouble();
+
         scanner.nextLine();
         Optional<Project> project = projectService.getProjectById(projectId);
+
         System.out.println(project.get().getId());
       Material material = new Material(name,vatRate,project.get(), unitCost, quantity, transportCost, qualityCoefficient);
         Material addedMaterial = materialService.add(material,project.get().getId());

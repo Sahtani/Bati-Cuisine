@@ -15,6 +15,8 @@ public class Project implements Identifiable {
     private ProjectStatus status;
     private Client client;
     private List<Component> components;
+    private List<Material> materials;
+    private List<Labor> labors;
 //    private Estimate estimate ;
 
 
@@ -31,7 +33,9 @@ public class Project implements Identifiable {
     }
 
     public Project() {
-        this.components = new ArrayList<>(); // Initialize here as well
+        this.components = new ArrayList<>();
+        this.materials = new ArrayList<>();
+        this.labors = new ArrayList<>();
     }
 
 
@@ -91,6 +95,22 @@ public class Project implements Identifiable {
 
     public void setComponents(List<Component> components) {
         this.components = components;
+    }
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
+    }
+
+    public List<Labor> getLabors() {
+        return labors;
+    }
+
+    public void setLabors(List<Labor> labors) {
+        this.labors = labors;
     }
 
     @Override

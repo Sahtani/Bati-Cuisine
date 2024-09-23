@@ -60,6 +60,9 @@ public class LaborUI {
 
         System.out.print("Enter VAT rate: ");
         double vatRate = scanner.nextDouble();
+
+        scanner.nextLine();
+
         Optional<Project> project = projectService.getProjectById(projectId);
         Labor labor = new Labor(name,vatRate,project.get(),hourlyRate,hoursWorked,workerProductivity);
 

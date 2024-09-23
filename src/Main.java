@@ -2,6 +2,8 @@
 
 import Config.Db;
 import Repository.Implementations.ClientRepository;
+import Repository.Implementations.LaborRepository;
+import Repository.Implementations.MaterialRepository;
 import Repository.Implementations.ProjectRepository;
 import Service.Implementations.ClientService;
 import Service.Implementations.ProjectService;

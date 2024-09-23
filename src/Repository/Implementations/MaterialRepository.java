@@ -83,5 +83,34 @@ public class MaterialRepository implements ComponentRepository<Material> {
         }
     }
 
+    public List<Material> getMaterialsByProjectId(int projectId) throws SQLException {
+        List<Material> materials = new ArrayList<>();
+        String query = "SELECT * FROM material WHERE project_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, projectId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Material material = new Material();
+                material.setId(resultSet.getInt("id"));
+                material.setName(resultSet.getString("name"));
+                material.setVatRate(resultSet.getDouble("tvarate"));
+                material.setUnitCost(resultSet.getDouble("unitcost"));
+                material.setQuantity(resultSet.getDouble("quantity"));
+                material.setTransportCost(resultSet.getDouble("transportcost"));
+                material.setQualityCoefficient(resultSet.getDouble("qualitycoefficient"));
+
+
+
+                materials.add(material);
+            }
+        }
+        return materials;
+    }
+
+
+
+
 
 }

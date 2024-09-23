@@ -1,7 +1,6 @@
 package Repository.Implementations;
 
 import Model.Entities.Labor;
-import Model.Entities.Material;
 import Repository.Interfaces.ComponentRepository;
 
 import java.sql.*;
@@ -67,5 +66,26 @@ public class LaborRepository implements ComponentRepository<Labor> {
         }
     }
 
+    public List<Labor> getLaborsByProjectId(int projectId) throws SQLException {
+        List<Labor> labors = new ArrayList<>();
+        String query = "SELECT * FROM labor WHERE project_id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, projectId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Labor labor = new Labor();
+                labor.setId(resultSet.getInt("id"));
+                labor.setVatRate(resultSet.getDouble("tvarate"));
+
+                labor.setHourlyRate(resultSet.getDouble("hourlyrate"));
+                labor.setHoursWorked(resultSet.getDouble("hoursworked"));
+                labor.setWorkerProductivity(resultSet.getDouble("workerproductivity"));
+                labors.add(labor);
+            }
+        }
+        return labors;
+    }
 
 }

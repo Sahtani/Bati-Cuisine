@@ -15,31 +15,30 @@ import Service.Interfaces.IProjectService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class ProjectManagementUI {
+
     private final Scanner scanner = new Scanner(System.in);
     private static Connection connection = Db.getInstance().getConnection();
+
     private final IClientService clientService;
     private final IProjectService projectService;
-    //    private final IComponentService<Labor> laborService;
-//    private final IComponentService<Material> materialService;
+
     private final LaborService laborService;
     private final MaterialService materialService;
 
-    //   private final ProjectUI projectUI;
+
     private final ClientUI clientUI;
     private final MaterialUI materialUI;
+
     private final LaborUI laborUI;
 
     public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService2, MaterialService materialService2) {
         this.clientService = clientService;
         this.projectService = projectService;
-//        this.materialService = new MaterialService(new MaterialRepository(connection));
-//        this.laborService = new LaborService(new LaborRepository(connection));
         this.laborService = laborService2;
         this.materialService = materialService2;
 
@@ -51,6 +50,8 @@ public class ProjectManagementUI {
 
     public static void main(String[] args) throws SQLException {
         IClientService clientService = new ClientService(new ClientRepository(connection));
+
+
         IProjectService projectService = new ProjectService(new ProjectRepository(connection, clientService));
         MaterialService materialService = new MaterialService(new MaterialRepository(connection));
         LaborService laborService = new LaborService(new LaborRepository(connection));
@@ -77,7 +78,7 @@ public class ProjectManagementUI {
                     displayExistingProjects();
                     break;
                 case 3:
-                    // calculateProjectCost();
+                    calculateProjectCost();
                     break;
                 case 4:
                     System.out.println("Goodbye!");
@@ -89,6 +90,7 @@ public class ProjectManagementUI {
     }
 
     private Project createProject() throws SQLException {
+
         Project addedProject = null;
         System.out.println("--- Client Search ---");
         System.out.println("1. Search for an existing client");
@@ -152,8 +154,12 @@ public class ProjectManagementUI {
         response = scanner.nextLine();
         if (response.equalsIgnoreCase("y")) {
             displayProjectCost(addedProject);
+        } else {
+            // Return to the main menu :
+
+            mainMenu();
         }
-//        System.out.println(addedProject);
+
         return addedProject;
     }
 
@@ -179,22 +185,8 @@ public class ProjectManagementUI {
         System.out.println("Displaying existing projects...");
     }
 
-    private Project applyMargprofitProject(Project addedProject) throws SQLException {
+    private void applyMargprofitProject(Project addedProject) throws SQLException {
 
-
-//        System.out.println("--- Total Cost Calculation ---");
-//
-//        System.out.print("Do you want to apply VAT to the project? (y/n): ");
-//        String vatResponse = scanner.nextLine();
-//        double vatPercentage = 0;
-//        if (vatResponse.equalsIgnoreCase("y")) {
-//            System.out.print("Enter VAT percentage (%): ");
-//
-//            vatPercentage = scanner.nextDouble();
-//
-//
-//            scanner.nextLine();
-//        }
 
         System.out.print("Do you want to apply a profit margin to the project? (y/n): ");
         String profitMarginResponse = scanner.nextLine();
@@ -216,18 +208,15 @@ public class ProjectManagementUI {
         System.out.println("Site Address:" + addedProject.getClient().getAddress());
 
 
-        return addedProject;
     }
 
     private void displayProjectCost(Project addedProject) throws SQLException {
         applyMargprofitProject(addedProject);
         try {
             System.out.println("---Cost Details---");
-//            System.out.println(addedProject);
+
             System.out.println("--- Project Cost Details for: " + addedProject.getProjectName() + " ---");
 
-            //  double totalMaterialCost = materialService.calculateTotalCostMT();
-            //   double totalLaborCost = laborService.calculateTotalCostLB();
             // Calculate total material cost
             double totalMaterialCost = addedProject.getComponents().stream()
                     .filter(component -> component instanceof Material)
@@ -235,6 +224,7 @@ public class ProjectManagementUI {
                     .mapToDouble(material -> (material.getQuantity() * material.getUnitCost() * material.getQualityCoefficient())
                             + material.getTransportCost())
                     .sum();
+
             // get material details :
             System.out.println("1. Materials :");
             double totalMaterialCostWithVAT = addedProject.getComponents().stream()
@@ -251,19 +241,10 @@ public class ProjectManagementUI {
                         return materialCostWithVAT;
                     }).sum();
 
+            // display total material cost before and with tva :
+            System.out.printf("**Total material cost before VAT: %.2f €**\n", totalMaterialCost);
             System.out.printf("**Total material cost with VAT: %.2f €**\n", totalMaterialCostWithVAT);
 
-
-//            // filter components based on their VAT (TVA) :
-//            double vatPercentage = addedProject.getComponents().stream()
-//                    .filter(component -> component.getVatRate() > 0)
-//                    .map(Component::getVatRate)
-//                    .findFirst()
-//                    .orElse(0.0);
-
-            System.out.printf("**Total material cost before VAT: %.2f €**\n", totalMaterialCost);
-           // double totalMaterialCostTV = applyVAT(totalMaterialCost, vatPercentage);
-         //   System.out.printf("**Total material cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalMaterialCostTV);
 
             // Calculate total labor cost
 
@@ -272,7 +253,8 @@ public class ProjectManagementUI {
                     .map(component -> (Labor) component)
                     .mapToDouble(labor -> (labor.getHourlyRate() * labor.getHoursWorked() * labor.getWorkerProductivity()))
                     .sum();
-            // get labos details :
+            // get labors details :
+
             System.out.println("2. Labor:");
             double totalLaborCostWithVAT = addedProject.getComponents().stream()
                     .filter(component -> component instanceof Labor)
@@ -287,16 +269,16 @@ public class ProjectManagementUI {
                         return laborCostWithVAT;
                     }).sum();
 
+            // display total labor cost before and with tva :
+            System.out.printf("**Total labor cost before VAT: %.2f €**\n", totalLaborCost);
             System.out.printf("**Total labor cost with VAT: %.2f €**\n", totalLaborCostWithVAT);
 
-            //     double totalLaborCostTV = applyVAT(totalLaborCost, vatPercentage);
-         //   System.out.printf("**Total labor cost with VAT (%.0f%%): %.2f €**\n", vatPercentage, totalLaborCostTV);
-            //display totalCost for project :
 
+            //display total cost before margin :
             double totalCost = totalMaterialCostWithVAT + totalLaborCostWithVAT;
             System.out.printf("3.Total project cost before margin: %.2f €\n", totalCost);
 
-            //// Profit margin display
+            // Profit margin display with margin:
 
             double profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
 
@@ -306,24 +288,38 @@ public class ProjectManagementUI {
             // Total final cost display
 
             double finalTotalCost = applyMargin(totalCost, profitmargin);
-            projectService.updateTotalCost(addedProject,finalTotalCost);
+            projectService.updateTotalCost(addedProject, finalTotalCost);
             System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
-
-
 
         } catch (Exception e) {
             System.out.println("An error occurred while calculating the costs: " + e.getMessage());
         }
     }
 
+    private void calculateProjectCost( ) {
+        displayExistingProjects();
 
-//    }
+        System.out.print("Enter the ID of the project you want to calculate the cost for: ");
 
-    public static double applyVAT(double baseCost, double vatPercentage) {
-        return baseCost * (1 + vatPercentage / 100);
+        try {
+            int projectId = scanner.nextInt();
+
+            Optional<Project>  project = projectService.getProjectById(projectId);
+            System.out.println(project.get());
+            if (project.isPresent()) {
+                displayProjectCost(project.get());
+            } else {
+                System.out.println("Project not found with the given ID.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a numeric project ID.");
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
     }
 
-    public static double applyMargin(double baseCost, double marginPercentage) {
+    //Calculates the final cost by applying a specified profit margin percentage
+    private double applyMargin(double baseCost, double marginPercentage) {
         return baseCost * (marginPercentage / 100);
     }
 }

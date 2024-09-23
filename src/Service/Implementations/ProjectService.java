@@ -60,19 +60,16 @@ public class ProjectService implements IProjectService {
         return  projectRepository.findAll();
     }
 
-    @Override
-//    public Project getProjectById(int projectId) throws SQLException {
-//        Project project = projectRepository.findById(projectId);
-//        System.out.println(project.getId());
-//        return project;
-//    }
 
-public Optional<Project> getProjectById(int projectId) throws SQLException {
-    List<Project> projectList = getAllProject();
-    return projectList.stream()
-            .filter(project -> project.getId() == projectId)
-            .findFirst();
-}
+
+    @Override
+    public Optional<Project> getProjectById(int projectId) throws SQLException {
+        List<Project> projectList = getAllProject();
+        return projectList.stream()
+                .filter(project -> project.getId() == projectId)
+                .findFirst();
+    }
+
 
     @Override
     public void updateTotalCost(Project project, double newTotalCost) throws SQLException {

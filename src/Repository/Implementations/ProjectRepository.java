@@ -1,7 +1,6 @@
 package Repository.Implementations;
 
-import Model.Entities.Client;
-import Model.Entities.Project;
+import Model.Entities.*;
 import Service.Implementations.ClientService;
 import Service.Interfaces.IClientService;
 
@@ -9,32 +8,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ProjectRepository extends BaseRepository<Project> {
-     private IClientService clientService  ;
+
+     private final IClientService clientService  ;
+     private final MaterialRepository materialRepository;
+     private final LaborRepository laborRepository;
+
     public ProjectRepository(Connection connection, IClientService clientService ) {
         super(connection);
         this.clientService = clientService ;
+        this.materialRepository = new MaterialRepository(connection);
+        this.laborRepository = new LaborRepository(connection);
     }
 
     @Override
     public Project mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-
         Project project = new Project();
         project.setId(resultSet.getInt("id"));
         int clientId = resultSet.getInt("client_id");
         Client client = clientService.getClientById(clientId);
-
         project.setClient(client);
-
         project.setProjectName(resultSet.getString("projectname"));
         project.setProfitMargin(resultSet.getDouble("profitmargin"));
         project.setTotalCost(resultSet.getDouble("totalcost"));
 
-        return project;
 
+        List<Material> materials = materialRepository.getMaterialsByProjectId(project.getId());
+        List<Labor> labors = laborRepository.getLaborsByProjectId(project.getId());
+
+        List<Component> components = new ArrayList<>();
+        components.addAll(materials);
+        components.addAll(labors);
+
+        project.setComponents(components);
+
+
+
+        return project;
     }
+
 
 
     @Override
