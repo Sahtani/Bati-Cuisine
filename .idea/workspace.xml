@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7613dbc-72bb-4b78-8340-b45d88ab62a3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +29,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Sahtani/Bati-Cuisine.git",
+    "accountId": "0e8cf8f3-7d3e-4e65-9767-872569f1f08d"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
