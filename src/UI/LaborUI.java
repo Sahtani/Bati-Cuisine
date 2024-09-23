@@ -2,9 +2,6 @@ package UI;
 
 import Model.Entities.Labor;
 import Model.Entities.Project;
-import Service.Implementations.LaborService;
-import Service.Implementations.ProjectService;
-import Service.Interfaces.IClientService;
 import Service.Interfaces.IComponentService;
 import Service.Interfaces.IProjectService;
 
@@ -46,7 +43,7 @@ public class LaborUI {
         }
     }
 
-    public void createLabor(int projectId) throws SQLException {
+    public Labor createLabor(int projectId) throws SQLException {
 
 
         System.out.print("Enter labor type (e.g., General worker, Specialist): ");
@@ -63,6 +60,9 @@ public class LaborUI {
 
         System.out.print("Enter VAT rate: ");
         double vatRate = scanner.nextDouble();
+
+        scanner.nextLine();
+
         Optional<Project> project = projectService.getProjectById(projectId);
         Labor labor = new Labor(name,vatRate,project.get(),hourlyRate,hoursWorked,workerProductivity);
 
@@ -75,6 +75,7 @@ public class LaborUI {
         } else {
             System.out.println("Failed to create labor.");
         }
+        return labor;
     }
 }
 

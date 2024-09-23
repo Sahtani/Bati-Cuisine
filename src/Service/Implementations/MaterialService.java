@@ -5,6 +5,7 @@ import Repository.Implementations.MaterialRepository;
 import Service.Interfaces.IComponentService;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static Util.DataValidator.validateMaterial;
 
@@ -27,4 +28,23 @@ public class MaterialService implements IComponentService<Material> {
             return null;
         }
     }
+    public List<Material> getAllMaterials() throws SQLException {
+        List<Material> materials = materialRepository.getAllMaterials();
+        return materials;
+    }
+
+    public double calculateTotalCostMT() throws SQLException {
+        double totalCost = 0.0;
+        List<Material> materials = getAllMaterials();
+
+        totalCost = materials.stream()
+                .mapToDouble(material ->
+                        (material.getQuantity() * material.getUnitCost() * material.getQualityCoefficient())
+                                + material.getTransportCost())
+                .sum();
+
+        return totalCost;
+    }
+
+
 }

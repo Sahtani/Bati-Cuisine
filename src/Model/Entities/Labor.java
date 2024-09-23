@@ -42,4 +42,18 @@ public class Labor extends Component {
     public void setWorkerProductivity(double workerProductivity) {
         this.workerProductivity = workerProductivity;
     }
+
+    @Override
+    public String toString() {
+        return "Labor{" +
+                "hourlyRate=" + hourlyRate +
+                ", hoursWorked=" + hoursWorked +
+                ", workerProductivity=" + workerProductivity +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", componentType='" + componentType + '\'' +
+                ", vatRate=" + vatRate +
+                ", project=" + project +
+                '}';
+    }
 }
