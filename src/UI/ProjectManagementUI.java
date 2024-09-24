@@ -6,10 +6,7 @@ import Repository.Implementations.ClientRepository;
 import Repository.Implementations.LaborRepository;
 import Repository.Implementations.MaterialRepository;
 import Repository.Implementations.ProjectRepository;
-import Service.Implementations.ClientService;
-import Service.Implementations.LaborService;
-import Service.Implementations.MaterialService;
-import Service.Implementations.ProjectService;
+import Service.Implementations.*;
 import Service.Interfaces.IClientService;
 import Service.Interfaces.IProjectService;
 
@@ -20,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class ProjectManagementUI {
 
@@ -35,13 +33,13 @@ public class ProjectManagementUI {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
-
     private final ClientUI clientUI;
     private final MaterialUI materialUI;
 
     private final LaborUI laborUI;
+    private final EstimateService estimateService;
 
-    public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService2, MaterialService materialService2) {
+    public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService2, MaterialService materialService2, EstimateService estimateService) {
         this.clientService = clientService;
         this.projectService = projectService;
         this.laborService = laborService2;
@@ -51,6 +49,7 @@ public class ProjectManagementUI {
         this.materialUI = new MaterialUI(materialService, (IProjectService) projectService);
         this.laborUI = new LaborUI(laborService, (IProjectService) projectService);
 
+        this.estimateService = estimateService;
     }
 
     public static void main(String[] args) throws SQLException {
@@ -60,8 +59,9 @@ public class ProjectManagementUI {
         IProjectService projectService = new ProjectService(new ProjectRepository(connection, clientService));
         MaterialService materialService = new MaterialService(new MaterialRepository(connection));
         LaborService laborService = new LaborService(new LaborRepository(connection));
+        EstimateService estimateService = new EstimateService(connection);
 
-        ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService, laborService, materialService);
+        ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService, laborService, materialService, estimateService);
         ui.mainMenu();
     }
 
@@ -298,8 +298,8 @@ public class ProjectManagementUI {
             System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
 
             System.out.println("--- Saving the estimate ---");
-
-            saveEstimate();
+            scanner.nextLine();
+            saveEstimate(addedProject);
 
             System.out.println("--- End of the project ---\n");
 
@@ -308,7 +308,7 @@ public class ProjectManagementUI {
         }
     }
 
-    private void calculateProjectCost( ) {
+    private void calculateProjectCost() {
         displayExistingProjects();
 
         System.out.print("Enter the ID of the project you want to calculate the cost for: ");
@@ -316,7 +316,7 @@ public class ProjectManagementUI {
         try {
             int projectId = scanner.nextInt();
 
-            Optional<Project>  project = projectService.getProjectById(projectId);
+            Optional<Project> project = projectService.getProjectById(projectId);
             System.out.println(project.get());
             if (project.isPresent()) {
                 displayProjectCost(project.get());
@@ -335,22 +335,55 @@ public class ProjectManagementUI {
         return baseCost * (marginPercentage / 100);
     }
 
-    public void saveEstimate() {
+    public void saveEstimate(Project project) {
         try {
-            System.out.print("Enter the quote issuance date (format: dd/MM/yyyy): ");
-            String issuanceDateStr = scanner.nextLine();
-            LocalDate issuanceDate = LocalDate.parse(issuanceDateStr, formatter);
+//            System.out.print("Enter the project ID: ");
+//            int projectId = Integer.parseInt(scanner.nextLine());
 
-            System.out.print("Enter the quote validity date (format: dd/MM/yyyy): ");
-            String validityDateStr = scanner.nextLine();
-            LocalDate validityDate = LocalDate.parse(validityDateStr, formatter);
+//            System.out.print("Enter the estimated amount: ");
+//            double estimatedAmount = Double.parseDouble(scanner.nextLine());
+
+            String datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+            Pattern pattern = Pattern.compile(datePattern);
+            LocalDate issuanceDate = null;
+            LocalDate validityDate = null;
+
+            String issuanceDateStr;
+            do {
+                System.out.print("Enter the quote issuance date (format: dd/MM/yyyy): ");
+                issuanceDateStr = scanner.nextLine().trim();
+                if (!pattern.matcher(issuanceDateStr).matches()) {
+                    System.out.println("Invalid date format. Please use dd/MM/yyyy.");
+                }
+            } while (!pattern.matcher(issuanceDateStr).matches());
+            issuanceDate = LocalDate.parse(issuanceDateStr, formatter);
+
+            String validityDateStr;
+            do {
+                System.out.print("Enter the quote validity date (format: dd/MM/yyyy): ");
+                validityDateStr = scanner.nextLine().trim();
+                if (!pattern.matcher(validityDateStr).matches()) {
+                    System.out.println("Invalid date format. Please use dd/MM/yyyy.");
+                }
+            } while (!pattern.matcher(validityDateStr).matches());
+            validityDate = LocalDate.parse(validityDateStr, formatter);
+
+
+            Estimate estimate = new Estimate();
+
+            estimate.setProject(project);
+            estimate.setEstimatedAmount(project.getTotalCost());
+            estimate.setIssueDate(issuanceDate);
+            estimate.setValidityDate(validityDate);
+
 
             System.out.print("Do you want to save the quote? (y/n): ");
-            String confirmation = scanner.nextLine();
+            String confirmation = scanner.nextLine().trim().toLowerCase();
 
             if (confirmation.equalsIgnoreCase("y")) {
-                saveQuoteToDatabase(issuanceDate, validityDate);
-                System.out.println("Estimate saved successfully!");
+
+                estimateService.saveEstimate(estimate);
+                System.out.println("Quote saved successfully!");
             } else {
                 System.out.println("Saving canceled.");
             }
@@ -358,11 +391,6 @@ public class ProjectManagementUI {
             System.out.println("Error saving the quote: " + e.getMessage());
         }
     }
-
-    private void saveQuoteToDatabase(LocalDate issuanceDate, LocalDate validityDate) {
-        // Logic to save the quote
-    }
-
 
 
 }

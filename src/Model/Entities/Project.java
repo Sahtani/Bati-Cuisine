@@ -17,7 +17,7 @@ public class Project implements Identifiable {
     private List<Component> components;
     private List<Material> materials;
     private List<Labor> labors;
-//    private Estimate estimate ;
+   private Estimate estimate ;
 
 
     // Constructor
@@ -38,16 +38,17 @@ public class Project implements Identifiable {
         this.labors = new ArrayList<>();
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
 
     @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
+
 
     public String getProjectName() {
         return projectName;
@@ -111,6 +112,14 @@ public class Project implements Identifiable {
 
     public void setLabors(List<Labor> labors) {
         this.labors = labors;
+    }
+
+    public Estimate getEstimate() {
+        return estimate;
+    }
+
+    public void setEstimate(Estimate estimate) {
+        this.estimate = estimate;
     }
 
     @Override
