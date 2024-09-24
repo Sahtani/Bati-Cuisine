@@ -2,12 +2,10 @@ package UI;
 
 import Config.Db;
 import Model.Entities.*;
-import Repository.Implementations.ClientRepository;
-import Repository.Implementations.LaborRepository;
-import Repository.Implementations.MaterialRepository;
-import Repository.Implementations.ProjectRepository;
+import Repository.Implementations.*;
 import Service.Implementations.*;
 import Service.Interfaces.IClientService;
+import Service.Interfaces.IEstimateService;
 import Service.Interfaces.IProjectService;
 
 import java.sql.Connection;
@@ -37,19 +35,20 @@ public class ProjectManagementUI {
     private final MaterialUI materialUI;
 
     private final LaborUI laborUI;
-    private final EstimateService estimateService;
+    private final IEstimateService estimateService;
 
-    public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService2, MaterialService materialService2, EstimateService estimateService) {
+    public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService, MaterialService materialService, IEstimateService estimateService) {
         this.clientService = clientService;
         this.projectService = projectService;
-        this.laborService = laborService2;
-        this.materialService = materialService2;
+        this.laborService = laborService;
+        this.materialService = materialService;
+        this.estimateService = estimateService;
 
         this.clientUI = new ClientUI(clientService);
         this.materialUI = new MaterialUI(materialService, (IProjectService) projectService);
         this.laborUI = new LaborUI(laborService, (IProjectService) projectService);
 
-        this.estimateService = estimateService;
+
     }
 
     public static void main(String[] args) throws SQLException {
@@ -59,7 +58,7 @@ public class ProjectManagementUI {
         IProjectService projectService = new ProjectService(new ProjectRepository(connection, clientService));
         MaterialService materialService = new MaterialService(new MaterialRepository(connection));
         LaborService laborService = new LaborService(new LaborRepository(connection));
-        EstimateService estimateService = new EstimateService(connection);
+        IEstimateService estimateService = new EstimateService(new EstimateRepository(connection,projectService));
 
         ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService, laborService, materialService, estimateService);
         ui.mainMenu();
@@ -71,7 +70,8 @@ public class ProjectManagementUI {
             System.out.println("1. Create a new project");
             System.out.println("2. Display existing projects");
             System.out.println("3. Calculate project cost");
-            System.out.println("4. Exit");
+            System.out.println("4. Manage Estimates (Accept/Refuse)");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -86,7 +86,9 @@ public class ProjectManagementUI {
                     calculateProjectCost();
                     break;
                 case 4:
-                    System.out.println("Goodbye!");
+                    manageEstimates();
+                case 5:
+                    manageEstimates();
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -337,11 +339,6 @@ public class ProjectManagementUI {
 
     public void saveEstimate(Project project) {
         try {
-//            System.out.print("Enter the project ID: ");
-//            int projectId = Integer.parseInt(scanner.nextLine());
-
-//            System.out.print("Enter the estimated amount: ");
-//            double estimatedAmount = Double.parseDouble(scanner.nextLine());
 
             String datePattern = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
             Pattern pattern = Pattern.compile(datePattern);
@@ -382,13 +379,46 @@ public class ProjectManagementUI {
 
             if (confirmation.equalsIgnoreCase("y")) {
 
-                estimateService.saveEstimate(estimate);
+                estimateService.addEstimate(estimate);
                 System.out.println("Quote saved successfully!");
             } else {
                 System.out.println("Saving canceled.");
             }
         } catch (Exception e) {
             System.out.println("Error saving the quote: " + e.getMessage());
+        }
+    }
+
+    //Manage Estimates (Accept/Refuse)
+
+    private void manageEstimates() {
+        try {
+            System.out.println("--- Manage Estimates ---");
+            System.out.print("Enter your client  ID to manage estimate: ");
+            int clientId = scanner.nextInt();
+
+            System.out.print("Enter the estimate ID to manage: ");
+            int estimateId = scanner.nextInt();
+            Optional<Client> client = Optional.ofNullable(clientService.getClientById(clientId));
+            Optional<Estimate> estimate = estimateService.getEstimateById(estimateId,clientId);
+            scanner.nextLine();
+
+            System.out.print("Do you want to accept the estimate? (y/n): ");
+            String input = scanner.nextLine();
+            if (estimate.isPresent()) {
+                if (input.equalsIgnoreCase("y")) {
+                    estimateService.updateStatus(estimate.get(), true);
+                    System.out.println("Estimate accepted.");
+                } else {
+                    estimateService.updateStatus(estimate.get(), false);
+                    System.out.println("Estimate refused.");
+                }
+            } else {
+                System.out.println("Estimate not found.");
+            }
+
+        } catch (Exception e) {
+           e.printStackTrace();
         }
     }
 

@@ -26,7 +26,6 @@ public class Project implements Identifiable {
         this.profitMargin = profitMargin;
         this.totalCost = totalCost;
         this.status = status;
-        this.client = client;
         if (components != null) {
             this.components = new ArrayList<>(components);
         }
@@ -36,7 +35,13 @@ public class Project implements Identifiable {
         this.components = new ArrayList<>();
         this.materials = new ArrayList<>();
         this.labors = new ArrayList<>();
+
     }
+//    public Project(Client client ){
+//        this.client = client;
+//    }
+
+
 
     @Override
     public int getId() {

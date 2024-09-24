@@ -1,14 +1,17 @@
 package Model.Entities;
 
+import Model.Interfaces.Identifiable;
+
 import java.time.LocalDate;
 
-public class Estimate{
+public class Estimate implements Identifiable {
     private int id;
     private Project project;
     private double estimatedAmount;
     private LocalDate issueDate;
     private LocalDate validityDate;
     private boolean accepted;
+
 
     public Estimate(int id, Project project, double estimatedAmount, LocalDate issueDate, LocalDate validityDate) {
         this.id = id;

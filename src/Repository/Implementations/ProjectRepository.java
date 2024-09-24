@@ -1,6 +1,7 @@
 package Repository.Implementations;
 
 import Model.Entities.*;
+import Model.Enums.ProjectStatus;
 import Service.Implementations.ClientService;
 import Service.Interfaces.IClientService;
 
@@ -65,7 +66,7 @@ public class ProjectRepository extends BaseRepository<Project> {
         statement.setString(2, project.getProjectName());
         statement.setDouble(3, project.getProfitMargin());
         statement.setDouble(4, project.getTotalCost());
-        statement.setString(5, String.valueOf(project.getStatus().ONGOING));
+        statement.setString(5, String.valueOf(ProjectStatus.ONGOING));
     }
 
 
