@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb427855-b36d-45cb-9be2-ef7e45d10f9e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/Interfaces/IEstimateService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Estimate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Estimate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Entities/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Entities/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ClientRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/EstimateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/EstimateRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/Implementations/ProjectRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/EstimateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/EstimateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Implementations/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/Interfaces/IClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/ClientUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ClientUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/ProjectManagementUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

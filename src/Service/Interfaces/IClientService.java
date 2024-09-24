@@ -19,6 +19,7 @@ public interface IClientService {
     Client getClientById(int clientId) throws SQLException;
 
     Optional<Client> findClientByName(String name);
+     double applyDiscount(Client client, double totalCost);
 
 
 }

@@ -55,11 +55,12 @@ public class ClientUI {
         }
     }
 
-    public void addClient() throws SQLException {
+    public Client addClient() throws SQLException {
         System.out.println("\n=== Add Client ===");
         Client client = getClientInput();
         clientService.addClient(client);
         System.out.println("Client added successfully.");
+        return client;
     }
 
     private void updateClient() throws SQLException {

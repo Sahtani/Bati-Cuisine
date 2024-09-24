@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class ClientService implements IClientService {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
@@ -21,55 +21,62 @@ public class ClientService implements IClientService {
     public void addClient(Client client) throws SQLException {
         if (DataValidator.isValidName(client.getName()) &&
                 DataValidator.isValidAddress(client.getAddress()) &&
-                DataValidator.isValidPhoneNumber(client.getPhone())&&
-                DataValidator.isValidBoolean(client.isProfessional())){
-                clientRepository.create(client);
+                DataValidator.isValidPhoneNumber(client.getPhone()) &&
+                DataValidator.isValidBoolean(client.isProfessional())) {
+            clientRepository.create(client);
 
 
-            } else{
-                System.out.println("Client data is invalid. Please check the provided information.");
-            }
-
+        } else {
+            System.out.println("Client data is invalid. Please check the provided information.");
         }
 
-        @Override
-        public void updateClient ( int clientId, Client client) throws SQLException {
-            Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
+    }
 
-            if (existingClient.isPresent()) {
-                client.setId(clientId);
-                clientRepository.update(client);
-            } else {
-                System.out.println("Client with ID " + clientId + " not found.");
-            }
+    @Override
+    public void updateClient(int clientId, Client client) throws SQLException {
+        Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
+
+        if (existingClient.isPresent()) {
+            client.setId(clientId);
+            clientRepository.update(client);
+        } else {
+            System.out.println("Client with ID " + clientId + " not found.");
         }
+    }
 
 
+    public void deleteClient(int clientId) throws SQLException {
+        Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
 
-    public void deleteClient (int clientId) throws SQLException {
-            Optional<Client> existingClient = Optional.ofNullable(getClientById(clientId));
 
-
-            if (existingClient.isPresent()) {
-                clientRepository.delete(clientId);
-            } else {
-                System.out.println("Client with ID " + clientId + " not found.");
-            }
+        if (existingClient.isPresent()) {
+            clientRepository.delete(clientId);
+        } else {
+            System.out.println("Client with ID " + clientId + " not found.");
         }
+    }
 
-        @Override
-        public List<Client> getAllClients () throws SQLException {
-            return clientRepository.findAll();
-        }
+    @Override
+    public List<Client> getAllClients() throws SQLException {
+        return clientRepository.findAll();
+    }
 
-        @Override
-        public Client getClientById ( int clientId) throws SQLException {
-            Client client = clientRepository.findById(clientId);
-            return client ;
-        }
+    @Override
+    public Client getClientById(int clientId) throws SQLException {
+        Client client = clientRepository.findById(clientId);
+        return client;
+    }
 
     @Override
     public Optional<Client> findClientByName(String name) {
         return clientRepository.findClientByName(name);
+    }
+
+    public double applyDiscount(Client client, double totalCost) {
+        if (client.isProfessional()) {
+            return totalCost * 0.90;
+        } else {
+            return totalCost * 0.95;
+        }
     }
 }

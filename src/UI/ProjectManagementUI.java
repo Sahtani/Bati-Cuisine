@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -58,7 +59,7 @@ public class ProjectManagementUI {
         IProjectService projectService = new ProjectService(new ProjectRepository(connection, clientService));
         MaterialService materialService = new MaterialService(new MaterialRepository(connection));
         LaborService laborService = new LaborService(new LaborRepository(connection));
-        IEstimateService estimateService = new EstimateService(new EstimateRepository(connection,projectService));
+        IEstimateService estimateService = new EstimateService(new EstimateRepository(connection, projectService));
 
         ProjectManagementUI ui = new ProjectManagementUI(clientService, projectService, laborService, materialService, estimateService);
         ui.mainMenu();
@@ -96,8 +97,7 @@ public class ProjectManagementUI {
         }
     }
 
-    private Project createProject() throws SQLException {
-
+    private String createProject() throws SQLException {
         Project addedProject = null;
         System.out.println("--- Client Search ---");
         System.out.println("1. Search for an existing client");
@@ -105,20 +105,23 @@ public class ProjectManagementUI {
         System.out.print("Choose an option: ");
         int clientChoice = scanner.nextInt();
         scanner.nextLine();
+        Client client ;
         String clientName = "";
 
         if (clientChoice == 1) {
             clientName = searchExistingClient();
         } else if (clientChoice == 2) {
-            clientUI.addClient();
-            return null;
+            client = clientUI.addClient();
+            clientName = client.getName();
         } else {
             System.out.println("Invalid option. Returning to the main menu.");
             return null;
         }
 
-        if (clientName == null || clientName.isEmpty()) {
-            System.out.println("No client found. Returning to the main menu.");
+        System.out.print("Do you want to proceed with this client? (y/n): ");
+        String responseUser = scanner.nextLine();
+
+        if (!responseUser.equalsIgnoreCase("y")) {
             return null;
         }
 
@@ -133,8 +136,8 @@ public class ProjectManagementUI {
             project.setClient(clientOptional.get());
             addedProject = projectService.addProject(project);
             int projectId = addedProject.getId();
-
             String materialResponse;
+
             do {
                 Material material = materialUI.createMaterial(projectId);
                 addedProject.getComponents().add(material);
@@ -142,37 +145,35 @@ public class ProjectManagementUI {
                 materialResponse = scanner.nextLine();
             } while (materialResponse.equalsIgnoreCase("y"));
 
-            System.out.println("-------------------- Labor Addition --------------");
             String laborResponse;
+
             do {
                 Labor labor = laborUI.createLabor(projectId);
                 addedProject.getComponents().add(labor);
                 System.out.print("Do you want to add another labor? (y/n): ");
                 laborResponse = scanner.nextLine();
             } while (laborResponse.equalsIgnoreCase("y"));
-
-
         } else {
             System.out.println("Client not found. Returning to the main menu.");
         }
+
         applyMargprofitProject(addedProject);
-        String response;
         assert addedProject != null;
         System.out.print("Do you want to calculate the cost of the project " + addedProject.getProjectName() + "? (y/n): ");
-        response = scanner.nextLine();
+        String response = scanner.nextLine();
+
         if (response.equalsIgnoreCase("y")) {
             displayProjectCost(addedProject);
         } else {
-            // Return to the main menu :
-
             mainMenu();
         }
-
-        return addedProject;
+        return addedProject != null ? addedProject.getProjectName() : null;
     }
 
 
+
     private String searchExistingClient() {
+
         System.out.println("--- Searching for existing client ---");
         System.out.print("Enter client name: ");
         String clientName = scanner.nextLine();
@@ -180,18 +181,31 @@ public class ProjectManagementUI {
         if (clientOptional.isPresent()) {
             Client client = clientOptional.get();
             System.out.println("Client found! Name: " + client.getName());
-            System.out.print("Do you want to proceed with this client? (y/n): ");
-            String response = scanner.nextLine();
-            return response.equalsIgnoreCase("y") ? client.getName() : null;
+
         } else {
             System.out.println("Client not found.");
             return null;
         }
+        return clientName;
     }
 
-    private void displayExistingProjects() {
-        System.out.println("Displaying existing projects...");
+    private void displayExistingProjects() throws SQLException {
+        List<Project> projects = projectService.getAllProject();
+        if (projects.isEmpty()) {
+            System.out.println("No existing projects found.");
+        } else {
+            System.out.printf("%-10s %-30s %-15s %-20s%n", "Project ID", "Project Name", "Total Cost", "Client");
+            System.out.println("--------------------------------------------------------------------------------");
+            for (Project project : projects) {
+                System.out.printf("%-10d %-30s %-15.2f %-20s%n",
+                        project.getId(),
+                        project.getProjectName(),
+                        project.getTotalCost(),
+                        project.getClient().getName());
+            }
+        }
     }
+
 
     private void applyMargprofitProject(Project addedProject) throws SQLException {
 
@@ -287,17 +301,33 @@ public class ProjectManagementUI {
             System.out.printf("3.Total project cost before margin: %.2f €\n", totalCost);
 
             // Profit margin display with margin:
+            double profitmargin = 0;
+            if(addedProject.getProfitMargin()!=0){
+                 profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
 
-            double profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
+            }else{
+                addedProject.getProfitMargin();
+
+            }
+
+
 
 
             System.out.printf("3.Profit margin (%.0f%%) : %.2f €\n", addedProject.getProfitMargin(), profitmargin);
 
             // Total final cost display
 
-            double finalTotalCost = applyMargin(totalCost, profitmargin);
-            projectService.updateTotalCost(addedProject, finalTotalCost);
-            System.out.printf("**Total final project cost : %.2f €**\n", finalTotalCost);
+            double finalTotalCost = profitmargin+totalCost;
+            double totalPrice = 0;
+
+
+            if (addedProject.getClient().isProfessional()) {
+                 totalPrice = clientService.applyDiscount(addedProject.getClient(), finalTotalCost);
+                System.out.println(finalTotalCost);
+
+            }
+            projectService.updateTotalCost(addedProject, totalPrice);
+            System.out.printf("**Total final project cost : %.2f €**\n", totalPrice);
 
             System.out.println("--- Saving the estimate ---");
             scanner.nextLine();
@@ -310,7 +340,8 @@ public class ProjectManagementUI {
         }
     }
 
-    private void calculateProjectCost() {
+    private void calculateProjectCost() throws SQLException {
+
         displayExistingProjects();
 
         System.out.print("Enter the ID of the project you want to calculate the cost for: ");
@@ -319,9 +350,13 @@ public class ProjectManagementUI {
             int projectId = scanner.nextInt();
 
             Optional<Project> project = projectService.getProjectById(projectId);
-            System.out.println(project.get());
+            //    System.out.println(project.get());
             if (project.isPresent()) {
-                displayProjectCost(project.get());
+                if (project.get().getTotalCost() == 0) {
+                    displayProjectCost(project.get());
+                } else
+                    System.out.println("The project has a defined total cost.");
+
             } else {
                 System.out.println("Project not found with the given ID.");
             }
@@ -347,7 +382,7 @@ public class ProjectManagementUI {
 
             String issuanceDateStr;
             do {
-                System.out.print("Enter the quote issuance date (format: dd/MM/yyyy): ");
+                System.out.print("Enter the estimate issuance date (format: dd/MM/yyyy): ");
                 issuanceDateStr = scanner.nextLine().trim();
                 if (!pattern.matcher(issuanceDateStr).matches()) {
                     System.out.println("Invalid date format. Please use dd/MM/yyyy.");
@@ -357,7 +392,7 @@ public class ProjectManagementUI {
 
             String validityDateStr;
             do {
-                System.out.print("Enter the quote validity date (format: dd/MM/yyyy): ");
+                System.out.print("Enter the estimate validity date (format: dd/MM/yyyy): ");
                 validityDateStr = scanner.nextLine().trim();
                 if (!pattern.matcher(validityDateStr).matches()) {
                     System.out.println("Invalid date format. Please use dd/MM/yyyy.");
@@ -374,13 +409,13 @@ public class ProjectManagementUI {
             estimate.setValidityDate(validityDate);
 
 
-            System.out.print("Do you want to save the quote? (y/n): ");
+            System.out.print("Do you want to save the estimate? (y/n): ");
             String confirmation = scanner.nextLine().trim().toLowerCase();
 
             if (confirmation.equalsIgnoreCase("y")) {
 
                 estimateService.addEstimate(estimate);
-                System.out.println("Quote saved successfully!");
+                System.out.println("Estimate saved successfully!");
             } else {
                 System.out.println("Saving canceled.");
             }
@@ -400,7 +435,7 @@ public class ProjectManagementUI {
             System.out.print("Enter the estimate ID to manage: ");
             int estimateId = scanner.nextInt();
             Optional<Client> client = Optional.ofNullable(clientService.getClientById(clientId));
-            Optional<Estimate> estimate = estimateService.getEstimateById(estimateId,clientId);
+            Optional<Estimate> estimate = estimateService.getEstimateById(estimateId, clientId);
             scanner.nextLine();
 
             System.out.print("Do you want to accept the estimate? (y/n): ");
@@ -418,7 +453,7 @@ public class ProjectManagementUI {
             }
 
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

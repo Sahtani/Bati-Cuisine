@@ -51,18 +51,17 @@ public class EstimateRepository extends BaseRepository<Estimate> {
     @Override
     protected void setParameters(PreparedStatement statement, Estimate estimate) throws SQLException {
 
-
-        statement.setDouble(1, estimate.getEstimatedAmount());
-        statement.setDate(2, java.sql.Date.valueOf(estimate.getIssueDate()));
-        statement.setDate(3, java.sql.Date.valueOf(estimate.getValidityDate()));
-        statement.setBoolean(4, estimate.isAccepted());
+        statement.setInt(1, estimate.getProject().getId());
+        statement.setDouble(2, estimate.getEstimatedAmount());
+        statement.setDate(3, java.sql.Date.valueOf(estimate.getIssueDate()));
+        statement.setDate(4, java.sql.Date.valueOf(estimate.getValidityDate()));
 
     }
 
 
     @Override
     protected String getInsertQuery() {
-        return "INSERT INTO estimates (project_id, estimatedamount, issuedate, validitydate, accepted) VALUES (?, ?, ?, ?, ?)";
+        return "INSERT INTO estimates (project_id, estimatedamount, issuedate, validitydate) VALUES (?, ?, ?, ?)";
     }
 
     @Override
