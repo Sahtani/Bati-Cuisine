@@ -77,6 +77,4 @@ public class ClientRepository extends BaseRepository<Client> {
     }
 
 
-
-
 }

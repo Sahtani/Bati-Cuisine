@@ -13,7 +13,7 @@ public class ProjectService implements IProjectService {
     private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository ;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -28,9 +28,7 @@ public class ProjectService implements IProjectService {
         if (project.getProjectName() == null || project.getProjectName().isEmpty()) {
             throw new IllegalArgumentException("Project name cannot be null or empty");
         }
-        if (project.getProfitMargin() < 0 || project.getTotalCost() < 0) {
-            throw new IllegalArgumentException("Profit margin and total cost must be non-negative");
-        }
+
 
         projectRepository.create(project);
         return project;
@@ -57,9 +55,8 @@ public class ProjectService implements IProjectService {
 
     @Override
     public List<Project> getAllProject() throws SQLException {
-        return  projectRepository.findAll();
+        return projectRepository.findAll();
     }
-
 
 
     @Override
@@ -79,7 +76,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public void updateProfitMargin(Project project, double newProfitMargin) throws SQLException {
-        projectRepository.updateProfitMargin(project,newProfitMargin);
+        projectRepository.updateProfitMargin(project, newProfitMargin);
 
     }
 

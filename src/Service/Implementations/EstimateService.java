@@ -4,16 +4,14 @@ import Model.Entities.Estimate;
 import Repository.Implementations.EstimateRepository;
 import Service.Interfaces.IEstimateService;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 public class EstimateService implements IEstimateService {
 
 
-    private EstimateRepository estimateRepository;
-    private Connection connection;
+    private final EstimateRepository estimateRepository;
+
 
     public EstimateService(EstimateRepository estimateRepository) {
         this.estimateRepository = estimateRepository;
@@ -22,25 +20,10 @@ public class EstimateService implements IEstimateService {
 
 
     @Override
-    public Estimate addEstimate(Estimate estimate) throws SQLException {
+    public void addEstimate(Estimate estimate) throws SQLException {
         estimateRepository.create(estimate);
-        return estimate;
     }
 
-    @Override
-    public void updateEstimate(int estimateId, Estimate estimate) throws SQLException {
-
-    }
-
-    @Override
-    public Optional<Estimate> deleteEstimate(int estimateId) throws SQLException {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Estimate> getAllEstimates() throws SQLException {
-        return estimateRepository.findAll();
-    }
 
     @Override
     public Optional<Estimate> getEstimateById(int estimateId, int clientId) throws SQLException {
@@ -63,26 +46,11 @@ public class EstimateService implements IEstimateService {
         estimate = estimateRepository.findById(estimate.getId());
         if (estimate != null) {
             estimate.setAccepted(newStatus);
-            estimateRepository.updateStatus(estimate,newStatus);
+            estimateRepository.updateStatus(estimate, newStatus);
         } else {
             System.out.println("Estimate not found.");
         }
     }
-
-
-//    public void acceptEstimate(int estimateId) throws SQLException {
-//
-//    }
-//
-//    public void refuseEstimate(int estimateId) throws SQLException {
-//        Estimate estimate = estimateRepository.findById(estimateId);
-//        if (estimate != null) {
-//            estimate.setAccepted(false); // Refuse the estimate
-//            estimateRepository.update(estimate);
-//        } else {
-//            System.out.println("Estimate not found.");
-//        }
-//    }
 
 
 }

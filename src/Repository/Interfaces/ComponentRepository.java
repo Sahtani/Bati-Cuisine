@@ -4,6 +4,6 @@ import java.util.List;
 
 @FunctionalInterface
 public interface ComponentRepository<T> {
-    T create(T entity,int projectId);
+    T create(T entity, int projectId);
 
 }

@@ -16,7 +16,7 @@ public interface IProjectService {
 
     List<Project> getAllProject() throws SQLException;
 
-    Optional<Project>  getProjectById(int projectId) throws SQLException;
+    Optional<Project> getProjectById(int projectId) throws SQLException;
 
     void updateTotalCost(Project project, double newTotalCost) throws SQLException;
 

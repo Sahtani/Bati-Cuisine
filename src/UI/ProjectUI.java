@@ -63,7 +63,7 @@ public class ProjectUI {
 
     private void addProject() throws SQLException {
         System.out.println("\n=== Add Project ===");
-        Project project  = getProjectInput();
+        Project project = getProjectInput();
         projectService.addProject(project);
         System.out.println("Project added successfully.");
     }
@@ -73,7 +73,7 @@ public class ProjectUI {
         System.out.print("Enter project ID to update: ");
         int projectId = Integer.parseInt(scanner.nextLine());
 
-       Optional<Project> existingProject = projectService.getProjectById(projectId);
+        Optional<Project> existingProject = projectService.getProjectById(projectId);
         if (existingProject.isPresent()) {
             Client client = existingProject.get().getClient();
             System.out.println("Updating project for client: " + client.getName());
@@ -84,7 +84,6 @@ public class ProjectUI {
             System.out.println("Project not found.");
         }
     }
-
 
 
     private void deleteProject() throws SQLException {
@@ -107,18 +106,6 @@ public class ProjectUI {
 
         System.out.print("Enter project name: ");
         project.setProjectName(scanner.nextLine());
-
-        System.out.print("Enter profit margin: ");
-        project.setProfitMargin(scanner.nextDouble());
-
-        System.out.print("Enter total cost: ");
-        project.setTotalCost(scanner.nextDouble());
-
-        System.out.print("Enter project status (ONGOING, COMPLETED, CANCELLED): ");
-        String statusString = scanner.next().toUpperCase();
-        project.setStatus(ProjectStatus.valueOf(statusString));
-
-        scanner.nextLine(); // Consume the newline character
 
         System.out.print("Enter client ID: ");
         int clientId = scanner.nextInt();

@@ -17,7 +17,9 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     }
 
     protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
+
     protected abstract String getTableName();
+
     protected abstract void setParameters(PreparedStatement statement, T entity) throws SQLException;
 
     @Override
@@ -69,6 +71,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
         }
         return entities;
     }
+
     @Override
     public void update(T entity) throws SQLException {
         String query = getUpdateQuery();
@@ -88,6 +91,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     }
 
     protected abstract String getInsertQuery();
+
     protected abstract String getUpdateQuery();
 
 }

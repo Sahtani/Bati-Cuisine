@@ -15,13 +15,13 @@ import java.util.Optional;
 
 public class ProjectRepository extends BaseRepository<Project> {
 
-     private final IClientService clientService  ;
-     private final MaterialRepository materialRepository;
-     private final LaborRepository laborRepository;
+    private final IClientService clientService;
+    private final MaterialRepository materialRepository;
+    private final LaborRepository laborRepository;
 
-    public ProjectRepository(Connection connection, IClientService clientService ) {
+    public ProjectRepository(Connection connection, IClientService clientService) {
         super(connection);
-        this.clientService = clientService ;
+        this.clientService = clientService;
         this.materialRepository = new MaterialRepository(connection);
         this.laborRepository = new LaborRepository(connection);
     }
@@ -48,10 +48,8 @@ public class ProjectRepository extends BaseRepository<Project> {
         project.setComponents(components);
 
 
-
         return project;
     }
-
 
 
     @Override
@@ -76,7 +74,6 @@ public class ProjectRepository extends BaseRepository<Project> {
     }
 
 
-
     @Override
     public String getUpdateQuery() {
         return "UPDATE projects SET client_id = ?, projectname = ?, profitmargin = ?, totalcost = ?, projectstatus = ? WHERE id = ?";
@@ -97,6 +94,7 @@ public class ProjectRepository extends BaseRepository<Project> {
             }
         }
     }
+
     public boolean updateProfitMargin(Project project, double newProfitMargin) throws SQLException {
 
         project.setProfitMargin(newProfitMargin);
@@ -126,11 +124,6 @@ public class ProjectRepository extends BaseRepository<Project> {
             return false;
         }
     }
-
-
-
-
-
 
 
 }

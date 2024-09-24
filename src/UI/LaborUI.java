@@ -44,38 +44,68 @@ public class LaborUI {
     }
 
     public Labor createLabor(int projectId) throws SQLException {
-
-
         System.out.print("Enter labor type (e.g., General worker, Specialist): ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Enter labor type (e.g., General worker, Specialist): ");
+            name = scanner.nextLine();
+            if (name == null || name.isEmpty() || (!name.equals("General worker") && !name.equals("Specialist"))) {
+                System.out.println("Labor name must be 'General worker' or 'Specialist' and cannot be null or empty.");
+            }
+        } while (name == null || name.isEmpty() || (!name.equals("General worker") && !name.equals("Specialist")));
 
-        System.out.print("Enter hourly rate (€/h): ");
-        double hourlyRate = scanner.nextDouble();
 
-        System.out.print("Enter the number of hours worked:  ");
-        double hoursWorked = scanner.nextDouble();
+        double hourlyRate;
+        do {
+            System.out.print("Enter hourly rate (€/h): ");
+            hourlyRate = scanner.nextDouble();
+            if (hourlyRate < 0) {
+                System.out.println("Hourly rate cannot be negative.");
+            }
+        } while (hourlyRate < 0);
 
-        System.out.print("Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): ");
-        double workerProductivity = scanner.nextDouble();
+        double hoursWorked;
+        do {
+            System.out.print("Enter the number of hours worked: ");
+            hoursWorked = scanner.nextDouble();
+            if (hoursWorked < 0) {
+                System.out.println("Hours worked cannot be negative.");
+            }
+        } while (hoursWorked < 0);
 
-        System.out.print("Enter VAT rate: ");
-        double vatRate = scanner.nextDouble();
+        double workerProductivity;
+        do {
+            System.out.print("Enter the productivity factor (1.0 = standard, > 1.1 = high productivity): ");
+            workerProductivity = scanner.nextDouble();
+            if (workerProductivity < 0 || workerProductivity > 1) {
+                System.out.println("Worker productivity must be between 0 and 1.");
+            }
+        } while (workerProductivity < 0 || workerProductivity > 1);
+
+        double vatRate;
+        do {
+            System.out.print("Enter VAT rate: ");
+            vatRate = scanner.nextDouble();
+            if (vatRate < 0) {
+                System.out.println("VAT rate cannot be negative.");
+            }
+        } while (vatRate < 0);
 
         scanner.nextLine();
 
         Optional<Project> project = projectService.getProjectById(projectId);
-        Labor labor = new Labor(name,vatRate,project.get(),hourlyRate,hoursWorked,workerProductivity);
 
-
-
-        Labor addedLabor = laborService.add(labor,projectId);
+        Labor labor = new Labor(name, vatRate, project.get(), hourlyRate, hoursWorked, workerProductivity);
+        Labor addedLabor = laborService.add(labor, projectId);
 
         if (addedLabor != null) {
             System.out.println("Labor created with ID: " + labor.getId());
         } else {
             System.out.println("Failed to create labor.");
         }
+
         return labor;
     }
+
 }
 

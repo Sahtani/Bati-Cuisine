@@ -10,21 +10,35 @@ public class DataValidator {
 
 
     public static boolean isValidName(String name) {
-        return isNotEmpty(name) && name.length() >= 2;
+        if (!isNotEmpty(name) || name.length() < 2) {
+            System.out.println("Please enter a valid name. It must be at least 2 characters long.");
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidPhoneNumber(String phone) {
         String phoneRegex = "^\\+?[0-9. ()-]{7,}$";
-        return isNotEmpty(phone) && phone.matches(phoneRegex);
+        if (!isNotEmpty(phone) || !phone.matches(phoneRegex)) {
+            System.out.println("Please enter a valid phone number. It must contain at least 7 digits.");
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidAddress(String address) {
-        return isNotEmpty(address) && address.length() >= 5;
+        if (!isNotEmpty(address) || address.length() < 5) {
+            System.out.println("Please enter a valid address. It must be at least 5 characters long.");
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidBoolean(boolean value) {
+        System.out.println("Please enter 'true' or 'false' for the professional status.");
         return value;
     }
+
 
     public static void validateMaterial(Material material) throws IllegalArgumentException {
         if (material.getName() == null || material.getName().isEmpty()) {

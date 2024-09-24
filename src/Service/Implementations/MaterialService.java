@@ -18,19 +18,19 @@ public class MaterialService implements IComponentService<Material> {
     }
 
     @Override
-    public Material add(Material material,int projectId) throws SQLException {
+    public Material add(Material material, int projectId) throws SQLException {
 
         try {
             validateMaterial(material);
-            return materialRepository.create(material,projectId);
+            return materialRepository.create(material, projectId);
         } catch (IllegalArgumentException e) {
             System.err.println("Validation failed: " + e.getMessage());
             return null;
         }
     }
+
     public List<Material> getAllMaterials() throws SQLException {
-        List<Material> materials = materialRepository.getAllMaterials();
-        return materials;
+        return materialRepository.getAllMaterials();
     }
 
     public double calculateTotalCostMT() throws SQLException {

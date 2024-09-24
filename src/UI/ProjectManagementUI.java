@@ -7,6 +7,7 @@ import Service.Implementations.*;
 import Service.Interfaces.IClientService;
 import Service.Interfaces.IEstimateService;
 import Service.Interfaces.IProjectService;
+import Util.DataValidator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -105,7 +106,7 @@ public class ProjectManagementUI {
         System.out.print("Choose an option: ");
         int clientChoice = scanner.nextInt();
         scanner.nextLine();
-        Client client ;
+        Client client;
         String clientName = "";
 
         if (clientChoice == 1) {
@@ -126,8 +127,12 @@ public class ProjectManagementUI {
         }
 
         System.out.println("--------------------- New Project Creation ----------------------");
-        System.out.print("Enter project name: ");
-        String projectName = scanner.nextLine();
+        String projectName;
+        do {
+            System.out.print("Enter project name: ");
+            projectName = scanner.nextLine();
+        } while (!DataValidator.isValidName(projectName));
+
         Optional<Client> clientOptional = clientService.findClientByName(clientName);
 
         if (clientOptional.isPresent()) {
@@ -171,12 +176,17 @@ public class ProjectManagementUI {
     }
 
 
-
     private String searchExistingClient() {
 
         System.out.println("--- Searching for existing client ---");
-        System.out.print("Enter client name: ");
-        String clientName = scanner.nextLine();
+        String clientName;
+        boolean isValid;
+        do {
+            System.out.print("Enter client name: ");
+            clientName = scanner.nextLine();
+            isValid = DataValidator.isValidName(clientName);
+        } while (!isValid);
+
         Optional<Client> clientOptional = clientService.findClientByName(clientName);
         if (clientOptional.isPresent()) {
             Client client = clientOptional.get();
@@ -302,27 +312,25 @@ public class ProjectManagementUI {
 
             // Profit margin display with margin:
             double profitmargin = 0;
-            if(addedProject.getProfitMargin()!=0){
-                 profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
+            if (addedProject.getProfitMargin() != 0) {
+                profitmargin = applyMargin(totalCost, addedProject.getProfitMargin());
 
-            }else{
+            } else {
                 addedProject.getProfitMargin();
 
             }
-
-
 
 
             System.out.printf("3.Profit margin (%.0f%%) : %.2f €\n", addedProject.getProfitMargin(), profitmargin);
 
             // Total final cost display
 
-            double finalTotalCost = profitmargin+totalCost;
+            double finalTotalCost = profitmargin + totalCost;
             double totalPrice = 0;
 
 
             if (addedProject.getClient().isProfessional()) {
-                 totalPrice = clientService.applyDiscount(addedProject.getClient(), finalTotalCost);
+                totalPrice = clientService.applyDiscount(addedProject.getClient(), finalTotalCost);
                 System.out.println(finalTotalCost);
 
             }
@@ -350,7 +358,6 @@ public class ProjectManagementUI {
             int projectId = scanner.nextInt();
 
             Optional<Project> project = projectService.getProjectById(projectId);
-            //    System.out.println(project.get());
             if (project.isPresent()) {
                 if (project.get().getTotalCost() == 0) {
                     displayProjectCost(project.get());

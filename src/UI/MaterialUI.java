@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static Util.DataValidator.validateMaterial;
+
 public class MaterialUI {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -16,7 +18,7 @@ public class MaterialUI {
     private final IProjectService projectService;
 
 
-    public MaterialUI(IComponentService<Material> materialService,IProjectService projectService) {
+    public MaterialUI(IComponentService<Material> materialService, IProjectService projectService) {
         this.materialService = materialService;
         this.projectService = projectService;
     }
@@ -34,7 +36,7 @@ public class MaterialUI {
             switch (choice) {
                 case 1:
 
-                  //  createMaterial();
+                    //  createMaterial();
                     break;
                 case 2:
                     return;
@@ -45,33 +47,68 @@ public class MaterialUI {
     }
 
     public Material createMaterial(int projectId) throws SQLException {
-
         System.out.println("---------- Material Addition ------------");
 
-        System.out.print("Enter material name: ");
-        String name = scanner.nextLine();
+        String name;
+        do {
+            System.out.print("Enter material name: ");
+            name = scanner.nextLine();
+            if (name == null || name.isEmpty()) {
+                System.out.println("Material name cannot be null or empty.");
+            }
+        } while (name == null || name.isEmpty());
 
-        System.out.print("Enter the unit cost (€/m²): ");
-        double unitCost = scanner.nextDouble();
+        double unitCost;
+        do {
+            System.out.print("Enter the unit cost (€/m²): ");
+            unitCost = scanner.nextDouble();
+            if (unitCost < 0) {
+                System.out.println("Material unit cost cannot be negative.");
+            }
+        } while (unitCost < 0);
 
-        System.out.print("Enter the quantity (in m²): ");
-        double quantity = scanner.nextDouble();
+        double quantity;
+        do {
+            System.out.print("Enter the quantity (in m²): ");
+            quantity = scanner.nextDouble();
+            if (quantity < 0) {
+                System.out.println("Material quantity cannot be negative.");
+            }
+        } while (quantity < 0 );
 
-        System.out.print("Enter VAT rate: ");
-        double vatRate = scanner.nextDouble();
+        double vatRate;
+        do {
+            System.out.print("Enter VAT rate: ");
+            vatRate = scanner.nextDouble();
+            if (vatRate < 0) {
+                System.out.println("VAT rate cannot be negative.");
+            }
+        } while (vatRate < 0);
 
-        System.out.print("Enter the transportation cost (€): ");
-        double transportCost = scanner.nextDouble();
+        double transportCost;
+        do {
+            System.out.print("Enter the transportation cost (€): ");
+            transportCost = scanner.nextDouble();
+            if (transportCost < 0) {
+                System.out.println("Transport cost cannot be negative.");
+            }
+        } while (transportCost < 0);
 
-        System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.1 = high quality): ");
-        double qualityCoefficient = scanner.nextDouble();
+        double qualityCoefficient;
+        do {
+            System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.1 = high quality): ");
+            qualityCoefficient = scanner.nextDouble();
+            if (qualityCoefficient < 0 || qualityCoefficient > 1) {
+                System.out.println("Quality coefficient must be between 0 and 1.");
+            }
+        } while (qualityCoefficient < 0 || qualityCoefficient > 1);
 
         scanner.nextLine();
+
         Optional<Project> project = projectService.getProjectById(projectId);
 
-        System.out.println(project.get().getId());
-      Material material = new Material(name,vatRate,project.get(), unitCost, quantity, transportCost, qualityCoefficient);
-        Material addedMaterial = materialService.add(material,project.get().getId());
+        Material material = new Material(name, vatRate, project.get(), unitCost, quantity, transportCost, qualityCoefficient);
+        Material addedMaterial = materialService.add(material, project.get().getId());
 
         if (addedMaterial != null) {
             System.out.println("Material created with ID: " + material.getId());
@@ -81,6 +118,8 @@ public class MaterialUI {
 
         return material;
     }
+
+
 }
 
 

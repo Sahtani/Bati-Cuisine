@@ -29,8 +29,7 @@ public class LaborService implements IComponentService<Labor> {
     }
 
     public List<Labor> getAllLabors() throws SQLException {
-        List<Labor> labors = laborRepository.getAllLabor();
-        return labors;
+        return laborRepository.getAllLabor();
     }
 
     public double calculateTotalCostLB() throws SQLException {

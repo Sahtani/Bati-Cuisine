@@ -63,8 +63,7 @@ public class ClientService implements IClientService {
 
     @Override
     public Client getClientById(int clientId) throws SQLException {
-        Client client = clientRepository.findById(clientId);
-        return client;
+        return clientRepository.findById(clientId);
     }
 
     @Override

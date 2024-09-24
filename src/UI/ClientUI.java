@@ -3,6 +3,7 @@ package UI;
 import Model.Entities.Client;
 import Service.Implementations.ClientService;
 import Service.Interfaces.IClientService;
+import Util.DataValidator;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -95,17 +96,39 @@ public class ClientUI {
     }
 
     public Client getClientInput() {
-        System.out.print("Enter client name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter client address: ");
-        String address = scanner.nextLine();
-        System.out.print("Enter client phone: ");
-        String phone = scanner.nextLine();
-        System.out.print("Is the client professional? (true/false): ");
-        boolean isProfessional = scanner.nextBoolean();
-        scanner.nextLine();
+        String name;
+        String address;
+        String phone;
+        boolean isProfessional = false;
+
+        do {
+            System.out.print("Enter client name: ");
+            name = scanner.nextLine();
+        } while (!DataValidator.isValidName(name));
+
+        do {
+            System.out.print("Enter client address: ");
+            address = scanner.nextLine();
+        } while (!DataValidator.isValidAddress(address));
+
+        do {
+            System.out.print("Enter client phone: ");
+            phone = scanner.nextLine();
+        } while (!DataValidator.isValidPhoneNumber(phone));
+
+        do {
+            System.out.print("Is the client professional? (true/false): ");
+            if (scanner.hasNextBoolean()) {
+                isProfessional = scanner.nextBoolean();
+                scanner.nextLine();
+            } else {
+                scanner.next();
+                continue;
+            }
+        } while (!DataValidator.isValidBoolean(isProfessional));
 
         return new Client(name, address, phone, isProfessional);
     }
+
 
 }
