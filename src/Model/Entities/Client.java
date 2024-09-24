@@ -36,10 +36,12 @@ public class Client implements Identifiable {
 
     }
 
-
+    @Override
     public int getId() {
         return id;
     }
+
+    @Override
 
     public void setId(int id) {
         this.id = id;
@@ -84,6 +86,7 @@ public class Client implements Identifiable {
     public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
+
     @Override
     public String toString() {
         return "Client{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", isProfessional=" + isProfessional + ", projects=" + projects + '}';
