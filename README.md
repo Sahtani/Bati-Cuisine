@@ -49,14 +49,8 @@ git clone https://github.com/Sahtani/Bati-Cuisine.git
 
    Exécutez les scripts SQL fournis pour créer et initialiser la base de données.
 
-   `psql -U postgres -f scripts/init_db.sql`
-3. **Compilez et exécutez l'application**
+   `psql -U postgres -f scripts/data.sql`
 
-   Naviguez jusqu'au répertoire du projet et compilez l'application :
-
-   ```bash
-   cd bati-cuisine
-   mvn clean install
 ## Utilisation
 1. **Lancer l'application**
 
@@ -99,6 +93,11 @@ Fichiers de Base de Données
 config/data.sql: Script SQL pour la création et l'initialisation de la base de données.
 # Diagramme de Classes
 Le diagramme de classes UML est disponible ici.
+[Diagramme de Classes UML](https://lucid.app/lucidchart/2d415bc2-586c-4686-b3e9-6ecb9a4ea1ec/edit?page=HWEp-vi-RSFO&invitationId=inv_6df6fdd4-48ea-4617-8a93-37a1cb5f7c4b)
+
 
 # JIRA
-Suivez l'avancement du projet sur JIRA.
+Suivez l'avancement du projet sur JIRA. 
+## Suivi du projet sur Jira
+
+Le suivi du projet et le backlog sont disponibles sur [Jira](https://sahtanisoumia760.atlassian.net/jira/software/projects/BC/boards/2/backlog?epics=visible&selectedIssue=BC-17).
