@@ -1,5 +1,4 @@
 package UI;
-
 import Config.Db;
 import Model.Entities.*;
 import Repository.Implementations.*;
@@ -21,23 +20,23 @@ import java.util.regex.Pattern;
 
 public class ProjectManagementUI {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private  Scanner scanner = new Scanner(System.in);
     private static Connection connection = Db.getInstance().getConnection();
 
-    private final IClientService clientService;
-    private final IProjectService projectService;
+    private  IClientService clientService;
+    private  IProjectService projectService;
 
-    private final LaborService laborService;
-    private final MaterialService materialService;
+    private  LaborService laborService;
+    private  MaterialService materialService;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
-    private final ClientUI clientUI;
-    private final MaterialUI materialUI;
+    private  ClientUI clientUI;
+    private  MaterialUI materialUI;
 
-    private final LaborUI laborUI;
-    private final IEstimateService estimateService;
+    private  LaborUI laborUI;
+    private  IEstimateService estimateService;
 
     public ProjectManagementUI(IClientService clientService, IProjectService projectService, LaborService laborService, MaterialService materialService, IEstimateService estimateService) {
         this.clientService = clientService;
@@ -49,6 +48,10 @@ public class ProjectManagementUI {
         this.clientUI = new ClientUI(clientService);
         this.materialUI = new MaterialUI(materialService, (IProjectService) projectService);
         this.laborUI = new LaborUI(laborService, (IProjectService) projectService);
+
+
+    }
+    public ProjectManagementUI(){
 
 
     }
@@ -323,19 +326,19 @@ public class ProjectManagementUI {
 
             System.out.printf("3.Profit margin (%.0f%%) : %.2f €\n", addedProject.getProfitMargin(), profitmargin);
 
-            // Total final cost display
+            // Total  cost display
 
-            double finalTotalCost = profitmargin + totalCost;
+            double TotalCost = profitmargin + totalCost;
             double totalPrice = 0;
 
 
             if (addedProject.getClient().isProfessional()) {
-                totalPrice = clientService.applyDiscount(addedProject.getClient(), finalTotalCost);
-                System.out.println(finalTotalCost);
+                totalPrice = clientService.applyDiscount(addedProject.getClient(), TotalCost);
+                System.out.println(TotalCost);
 
             }
             projectService.updateTotalCost(addedProject, totalPrice);
-            System.out.printf("**Total final project cost : %.2f €**\n", totalPrice);
+            System.out.printf("**Total  project cost : %.2f €**\n", totalPrice);
 
             System.out.println("--- Saving the estimate ---");
             scanner.nextLine();
@@ -374,7 +377,7 @@ public class ProjectManagementUI {
         }
     }
 
-    //Calculates the final cost by applying a specified profit margin percentage
+    //Calculates the  cost by applying a specified profit margin percentage
     private double applyMargin(double baseCost, double marginPercentage) {
         return baseCost * (marginPercentage / 100);
     }
